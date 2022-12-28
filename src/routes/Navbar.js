@@ -53,7 +53,7 @@ const Navbar = () => {
   return (
     <div>
         <div className='logo-div'>
-            Logo
+            <h2>Cryptix</h2>
         </div>
 
         <div className='navbar-div'>

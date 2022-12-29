@@ -46,6 +46,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
+  padding-bottom: 23px;
 }
 
 .border-radius-outline{
@@ -55,4 +56,22 @@
 
 .show-card{
   max-width: 25%;
+}
+
+.home-container{
+  padding-top: 50px;
+  padding-left: 25px;
+}
+
+.footer-tm{
+  text-align: center;
+  font-size: 12px;
+  padding-top: 0;
+}
+.footer-container{
+  text-align: center;
+  font-size: 16px;
+  position: absolute;
+  bottom: auto;
+  width: 100%;
 }

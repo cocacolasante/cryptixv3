@@ -1,19 +1,18 @@
-import React from 'react'
+import CreateShow from "../components/CreateShow"
+import UpcomingEvents from "../components/UpcomingEvents"
 
 const Home = () => {
   return (
-    <div>
-      <div>
-        <h2>Home</h2>
-      </div>
-      <div>
+    <div className="home-container">
+      <div className='home-container'>
         <h2>Upcoming Events</h2>
         <div>
-          Put event carosel here
+          <UpcomingEvents />
         </div>
       </div>
       <div>
         <h2>Create your own show here</h2>
+        <CreateShow />
       </div>
     </div>
   )

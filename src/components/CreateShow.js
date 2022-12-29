@@ -105,7 +105,6 @@ const CreateShow = () => {
         const secondsToShow = _convertDateTime()
         console.log(secondsToShow)
         const convertedShowPrice = toWeiStr(showPrice).toString()
-        console.log(convertedShowPrice)
 
         
         try{
@@ -190,13 +189,13 @@ const CreateShow = () => {
   return (
     <div className='create-show-container' >
         <div>
-            <h1>Create Show</h1>
+            <h1>Create Event</h1>
         </div>
         <div className='create-show-div border-radius-outline'>
             <h2>Preview Show info</h2>
             <p>Show Name: {showName} </p>
             <p>Symbol: {showSymbol} </p>
-            <p>Band Address: {bandAddress} </p>
+            <p>Band/Speaker: {bandAddress} </p>
             <p>Venue Address: {venueAddress} </p>
             <p>Show Date: {showDate} </p>
             <p>Show Price: {showPrice} </p>
@@ -212,7 +211,7 @@ const CreateShow = () => {
                 <label >Show Symbol (3 letters)</label>
                 <input onChange={e=>setShowSymbol(e.target.value)} name="show symbol" required />
                 <br />
-                <label >Band Address</label>
+                <label >Band/Speaker Address</label>
                 <input onChange={e=>setBandAddress(e.target.value)} name="band address" required />
                 <br />
                 <label >Venue Address</label>

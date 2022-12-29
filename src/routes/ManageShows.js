@@ -2,12 +2,12 @@ import React from 'react'
 
 const ManageShows = () => {
   return (
-    <div>
-      <div>
-        <h2>Manage Tickets</h2>
+    <div className='home-container'>
+      <div className='home-container'>
+        <h2>Manage Your Tickets</h2>
       </div>
-      <div>
-        <h2>Manage Shows</h2>
+      <div className='home-container'>
+        <h2>Manage Your Shows</h2>
       </div>
     </div>
   )

@@ -72,6 +72,16 @@ const Navbar = () => {
             </div>
         </div>
         <Outlet />
+        <div className='footer-container'>
+            <ul className='router-links'>
+                        <Link to="/" className='router-link'>Home</Link>
+                        <Link to="/browse" className='router-link'>Browse Shows</Link>
+                        <Link to="/manageshows" className='router-link'>Manage Tickets/Shows</Link>
+                        <Link to='/createshow' className='router-link'>Create Show</Link>
+                        <Link to='/profile' className='router-link'>Profile</Link>
+                    </ul>
+                    <p className='footer-tm'>Created by Cocacolasante</p>
+        </div>
     </div>
   )
 }

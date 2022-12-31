@@ -51,13 +51,12 @@ const Navbar = () => {
 
 
   return (
-    <div>
-        <div className='logo-div'>
-            <h2>Cryptix</h2>
-        </div>
+    <div className=''>
 
-        <div className='navbar-div'>
-            <div >
+
+        <div className='navbar-div top-div-container'>
+            <h2 className='logo-div'>Cryptix</h2>
+            <div className='' >
                 <ul className='router-links'>
                     <Link to="/" className='router-link'>Home</Link>
                     <Link to="/browse" className='router-link'>Browse Shows</Link>
@@ -66,7 +65,7 @@ const Navbar = () => {
                     <Link to='/profile' className='router-link'>Profile</Link>
                 </ul>
             </div>
-            <div>
+            <div className='connect-div'>
                 {!activeAccount ? <button onClick={connectWallet}>Connect Wallet</button> : <p>{activeAccount.slice(0, 6)}...{activeAccount.slice(-4)} </p>}
 
             </div>

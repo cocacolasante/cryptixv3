@@ -9,6 +9,10 @@ import createContractAbi from "../abiAssets/createContractAbi.json"
 import ticketAbi from "../abiAssets/ticketAbi.json"
 
 
+const toWeiStr = (num) => ethers.utils.parseEther(num.toString())
+const toWeiInt = (num) => ethers.utils.parseEther(num) 
+const fromWei = (num) => ethers.utils.formatEther(num)
+
 const auth =
   'Basic ' + Buffer.from(env.PROJECT_ID + ':' + env.PROJECT_CODE).toString('base64');
 
@@ -46,6 +50,7 @@ const ViewShows = () => {
                 ticketAddress: show.ticketAddress,
                 escrowAddress: show.escrowAddress,
                 showTime: show.showTime.toString(),
+                showPrice: fromWei(show.price.toString()),
                 image: await _getTicketNFTImage(show.ticketAddress)
             }
 
@@ -87,7 +92,6 @@ const ViewShows = () => {
         )
 
     }
-
 
 
     const buyTickets = async (e, ticketAddress, show_name, bandaddy, venueAddy) =>{
@@ -143,8 +147,7 @@ const ViewShows = () => {
         })
     }
 
-    // get ticket contract then base uri
-    // WORK ON THIS TOMORROW
+
     const _getTicketNFTImage = async (ticketAddress) =>{
 
         const {ethereum } = window;
@@ -185,15 +188,12 @@ const ViewShows = () => {
                     <p>Band: {i["bandAddress"].slice(0, 6)}...{i["bandAddress"].slice(-6)}</p>
                     <p>Venue: {i["venueAddress"].slice(0, 6)}...{i["venueAddress"].slice(-6)}</p>
                     <p>Tickets: {i["ticketAddress"].slice(0, 6)}...{i["ticketAddress"].slice(-6)}</p>
+                    <p>Price: {i["showPrice"]}</p>
 
                     {/* <h4>Date: {displayShowDate(i["showTime"])}</h4> */}
                     {displayShowDate(i['showTime'])}
 
                     <button value={i} onClick={e=>buyTickets(e.target.value, i["ticketAddress"], i["ShowName"], i["bandAddress"], i["venueAddress"])} >Buy Ticket</button>
-
-                    <button value={i["showTime"]} onClick={e=>displayShowDate(e.target.value)} >test</button>
-
-
                 </div>
             )
         })) }

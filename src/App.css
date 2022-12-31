@@ -1,22 +1,44 @@
 .navbar-div{
   display: flex;
-  float: right;
-  padding-right: 25px;
-  padding-top: 12px;;
+  padding-top: 12px;
+  padding-left: 23px;
+  padding-bottom: 12px;
+  color: #E6EEF7;
+  
+
 }
+.connect-div{
+  position: absolute;
+  top: 6px;
+  right: 12px;
+}
+/* .logo-div{
+  position: absolute;
+  top:6px;
+  left: 12px;
+
+} */
+
+.top-div-container{
+  background-color: black;
+}
+
 .router-links{
   display: inline-flex;
+  color: white;
   
 }
 .router-link{
+  color: white;
   padding-right: 15px;
   text-decoration: none;
   list-style-type: none;
+
 }
 
 .thumbnail{
-  max-height: 250px;
-  max-width: 250px;
+  max-height: 200px;
+  max-width: 200px;
 }
 
 .create-container{
@@ -28,13 +50,9 @@
 
 }
 
-.logo-div{
-  display: flex;
-  float: left;
-  padding-left: 25px;
-  padding-top: 12px;;
-  padding-bottom: 25px;
-}
+
+
+
 .create-show-div{
   padding-top: 25px;
 }
@@ -55,8 +73,10 @@
 }
 
 .show-card{
-  max-width: 25%;
+  max-width: 30%;
   padding-left: 4px;
+  padding-right: 4px;
+  padding-bottom: 4px;
   text-align: center;
   display: inline-flex;
   flex-direction: column;

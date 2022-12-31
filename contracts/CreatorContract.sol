@@ -26,6 +26,7 @@ contract CreatorContract{
         address band;
         address venue;
         uint showTime;
+        uint price;
         bool completed;
     }
     
@@ -52,7 +53,7 @@ contract CreatorContract{
 
         newEscrow.setTicketContract(address(newTickets));
 
-        allShows[showNumber] = Show(_name, address(newTickets), address(newEscrow),newController, _bandAddress, _venueAddress, endTime, false);
+        allShows[showNumber] = Show(_name, address(newTickets), address(newEscrow),newController, _bandAddress, _venueAddress, endTime, price, false);
         
 
     }

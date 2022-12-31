@@ -7,6 +7,9 @@ import CREATE_SHOW_ADDRESS from '../addresses/createShow'
 import createContractAbi from "../abiAssets/createContractAbi.json"
 import ticketAbi from "../abiAssets/ticketAbi.json"
 
+const toWeiStr = (num) => ethers.utils.parseEther(num.toString())
+const toWeiInt = (num) => ethers.utils.parseEther(num) 
+const fromWei = (num) => ethers.utils.formatEther(num)
 
 const auth =
   'Basic ' + Buffer.from(env.PROJECT_ID + ':' + env.PROJECT_CODE).toString('base64');
@@ -39,6 +42,7 @@ const UpcomingEvents = () => {
         for(let i = 1; i < currentShowNum; i++){
             const show = await CreateShowContract.allShows(i)
 
+          
             const returnedShow = {
                 showNumber: i,
                 ShowName: show.showName,
@@ -47,10 +51,13 @@ const UpcomingEvents = () => {
                 ticketAddress: show.ticketAddress,
                 escrowAddress: show.escrowAddress,
                 showTime: show.showTime.toString(),
+                showPrice: fromWei(show.price.toString()),
                 image: await _getTicketNFTImage(show.ticketAddress)
             }
-
             output.push(returnedShow)
+
+
+
 
             
         }
@@ -104,8 +111,6 @@ const displayShowDate = (seconds) =>{
           return(<p>{hours}:{minutes} AM</p>)
       }
   }
-
-  console.log(hour)
 
   return(
       <div>
@@ -165,14 +170,12 @@ const displayEventCard = () =>{
               <p>Band: {i["bandAddress"].slice(0, 6)}...{i["bandAddress"].slice(-6)}</p>
               <p>Venue: {i["venueAddress"].slice(0, 6)}...{i["venueAddress"].slice(-6)}</p>
               <p>Tickets: {i["ticketAddress"].slice(0, 6)}...{i["ticketAddress"].slice(-6)}</p>
+              <p>Price: {i["showPrice"]}</p>
 
               {/* <h4>Date: {displayShowDate(i["showTime"])}</h4> */}
               {displayShowDate(i['showTime'])}
 
               <button value={i} onClick={e=>buyTickets(e.target.value, i["ticketAddress"], i["ShowName"], i["bandAddress"], i["venueAddress"])} >Buy Ticket</button>
-
-              <button value={i["showTime"]} onClick={e=>displayShowDate(e.target.value)} >test</button>
-
 
           </div>
       )
@@ -186,7 +189,7 @@ useEffect(()=>{
 
   return (
     <div className='home-container'>
-        {!upcomingShows? <h3>loading blockchain data</h3> : displayEventCard()}
+        {!upcomingShows ? <h3>loading blockchain data</h3> : displayEventCard()}
     </div>
   )
 }

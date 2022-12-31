@@ -13,6 +13,7 @@ const Home = () => {
       </div>
       <CreateButtonDiv />
       <AboutUs />
+      <br />
       <ContactUs />
     </div>
   )

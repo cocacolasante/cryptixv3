@@ -75,23 +75,20 @@ const ViewShows = () => {
         const formatTime = (hours) =>{
             if(hours > 12){
                 return(
-                    <p>{hours - 12}:{minutes} PM</p>
+                    <p>{hours - 12}:{minutes} PM {month}/{day}/{year}</p>
                 )
             }else{
-                return(<p>{hours}:{minutes} AM</p>)
+                return(<p>{hours}:{minutes} AM {month}/{day}/{year}</p>)
             }
         }
-
-        console.log(hour)
-
+      
         return(
             <div>
                 <>{formatTime(hour)}</>
-                <p>{month}/{day}/{year}</p>
             </div>
         )
-
-    }
+      
+      }
 
 
     const buyTickets = async (e, ticketAddress, show_name, bandaddy, venueAddy) =>{

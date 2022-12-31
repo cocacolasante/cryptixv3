@@ -105,17 +105,16 @@ const displayShowDate = (seconds) =>{
   const formatTime = (hours) =>{
       if(hours > 12){
           return(
-              <p>{hours - 12}:{minutes} PM</p>
+              <p>{hours - 12}:{minutes} PM {month}/{day}/{year}</p>
           )
       }else{
-          return(<p>{hours}:{minutes} AM</p>)
+          return(<p>{hours}:{minutes} AM {month}/{day}/{year}</p>)
       }
   }
 
   return(
       <div>
           <>{formatTime(hour)}</>
-          <p>{month}/{day}/{year}</p>
       </div>
   )
 
@@ -188,7 +187,7 @@ useEffect(()=>{
 },[])
 
   return (
-    <div className='home-container'>
+    <div className=''>
         {!upcomingShows ? <h3>loading blockchain data</h3> : displayEventCard()}
     </div>
   )

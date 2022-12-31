@@ -72,14 +72,14 @@ const Navbar = () => {
         </div>
         <Outlet />
         <div className='footer-container'>
-            <ul className='router-links'>
-                        <Link to="/" className='router-link'>Home</Link>
-                        <Link to="/browse" className='router-link'>Browse Shows</Link>
-                        <Link to="/manageshows" className='router-link'>Manage Tickets/Shows</Link>
-                        <Link to='/createshow' className='router-link'>Create Show</Link>
-                        <Link to='/profile' className='router-link'>Profile</Link>
-                    </ul>
-                    <p className='footer-tm'>Created by Cocacolasante</p>
+            <ul className='router-links-bottom'>
+                <Link to="/" className='router-link-bottom'>Home</Link>
+                <Link to="/browse" className='router-link-bottom'>Browse Shows</Link>
+                <Link to="/manageshows" className='router-link-bottom'>Manage Tickets/Shows</Link>
+                <Link to='/createshow' className='router-link-bottom'>Create Show</Link>
+                <Link to='/profile' className='router-link-bottom'>Profile</Link>
+            </ul>
+            <p className='footer-tm'>Created by Cocacolasante</p>
         </div>
     </div>
   )

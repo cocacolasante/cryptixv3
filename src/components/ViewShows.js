@@ -50,10 +50,39 @@ const ViewShows = () => {
 
             output.push(returnedShow)
 
-            setAllShows(output)
-
+            
         }
-        console.log(output)
+        setAllShows(output)
+        return output
+    }
+
+    
+    const viewAllShows = async () =>{
+        const {ethereum} = window;
+        const provider = new ethers.providers.Web3Provider(ethereum)
+
+        const CreateShowContract = new ethers.Contract(CREATE_SHOW_ADDRESS, createContractAbi.abi, provider)
+
+        const allReturnedShows = await CreateShowContract.returnAllShows()
+
+        
+        let output =[]
+        const mappedShows = await Promise.all(allReturnedShows.map(async (i)=>{
+            let returnedShow = [
+                i["showName"],
+                i["band"],
+                i["venue"],
+                i["ticketAddress"],
+                i["escrowAddress"],
+                // await _getTicketNFTImage(i["ticketAddress"])
+            ]
+            
+            output.push(returnedShow)
+
+            console.log(output)
+            return output
+        }))
+
     }
 
     const buyTickets = async (e, ticketAddress, show_name, bandaddy, venueAddy) =>{
@@ -123,7 +152,6 @@ const ViewShows = () => {
         let response = await fetch(ticketUri)
         
         let url = response.url;
-        console.log(url)
 
         return url
 
@@ -141,6 +169,7 @@ const ViewShows = () => {
 
     useEffect(()=>{
         returnAllShows()
+        viewAllShows()
     },[])
 
 
@@ -151,7 +180,6 @@ const ViewShows = () => {
         </div>
         <div>
         {!allShows ? <p>Loading Blockchain Data</p> :( allShows.map((i)=>{
-            console.log(i)
             return(
                 <div className='border-radius-outline show-card' key ={i["showNumber"]}>
                     <h3 >Show Number: {i["showNumber"]}</h3>

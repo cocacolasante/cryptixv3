@@ -56,6 +56,13 @@ contract CreatorContract{
 
     }
 
+    function returnAllShows() public view returns(Show[] memory){
+        Show[] memory allReturnedShows = new Show[](showNumber);
+        for(uint i; i < showNumber; i++){
+            allReturnedShows[i] = allShows[i];
+        }
+        return allReturnedShows;
+    }
 
 
 }

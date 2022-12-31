@@ -1,4 +1,4 @@
-import React from 'react'
+import { Link } from "react-router-dom"
 
 const AboutUs = () => {
   return (
@@ -13,6 +13,9 @@ const AboutUs = () => {
             <li>Eliminate fraudulent tickets and inject trust back into the secondary market</li>
         </ul>
         <p>Try out our ticket creation platform now for your event!</p>
+        <p>Create Your Event Today!</p>
+        <button className="home-page-btn"><Link to='/createshow' className='home-page-link'>Create Show</Link></button>
+
     </div>
   )
 }

@@ -67,6 +67,8 @@
 }
 .create-show-container{
   display: flexbox;
+  background-color: whitesmoke;
+
 }
 .create-form{
   text-align: center;
@@ -74,6 +76,7 @@
   flex-wrap: wrap;
   gap: 16px;
   padding-bottom: 23px;
+  
 }
 
 .border-radius-outline{
@@ -92,6 +95,7 @@
   flex-wrap: wrap;
   justify-content: space-between;
   line-height: 3px;
+  background-color: whitesmoke;
 }
 
 .home-container{
@@ -110,6 +114,9 @@
   position: absolute;
   bottom: auto;
   width: 100%;
+  background: rgb(130,130,130);
+  background: linear-gradient(29deg, rgba(130,130,130,1) 0%, rgba(255,255,255,1) 31%);
+
 }
 
 .home-page-link{
@@ -118,24 +125,25 @@
 
 }
 
+
 .home-page-btn {
-	box-shadow:inset 0px 1px 0px 0px #54a3f7;
-	background:linear-gradient(to bottom, #007dc1 5%, #0061a7 100%);
-	background-color:#007dc1;
-	border-radius:3px;
-	border:1px solid #124d77;
+	box-shadow: 3px 4px 0px 0px #899599;
+	background:linear-gradient(to bottom, #ededed 5%, #bab1ba 100%);
+	background-color:#ededed;
+	border-radius:15px;
+	border:1px solid #d6bcd6;
 	display:inline-block;
 	cursor:pointer;
-	color:#ffffff;
+	color:#000000;
 	font-family:Arial;
-	font-size:13px;
-	padding:6px 24px;
+	font-size:17px;
+	padding:7px 25px;
 	text-decoration:none;
-	text-shadow:0px 1px 0px #154682;
+	text-shadow:0px 1px 0px #e1e2ed;
 }
 .home-page-btn:hover {
-	background:linear-gradient(to bottom, #0061a7 5%, #007dc1 100%);
-	background-color:#0061a7;
+	background:linear-gradient(to bottom, #bab1ba 5%, #ededed 100%);
+	background-color:#bab1ba;
 }
 .home-page-btn:active {
 	position:relative;
@@ -145,7 +153,8 @@
 .create-home-div{
   text-align: center;
   border: 1px solid black;
-  background-color: grey;
+  background-color: black;
+  color: white;
   box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.75);
   -webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.75);
   -moz-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.75);
@@ -156,7 +165,7 @@
   border-radius: 10px;
   padding-bottom: 20px;
   margin: auto;
-  width: 90%;
+  width: 95%;
 }
 
 .about-us-div{
@@ -176,5 +185,9 @@
   font-style: italic;
 }
 .homepage-upcoming-events{
+  padding-bottom: 25px;
+}
+
+.view-shows-div{
   padding-bottom: 25px;
 }

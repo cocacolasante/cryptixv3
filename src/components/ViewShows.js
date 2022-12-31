@@ -175,7 +175,7 @@ const ViewShows = () => {
         <div>
             <h2>View Shows</h2>
         </div>
-        <div>
+        <div className='view-shows-div'>
         {!allShows ? <p>Loading Blockchain Data</p> :( allShows.map((i)=>{
             return(
                 <div className='border-radius-outline show-card' key ={i["showNumber"]}>

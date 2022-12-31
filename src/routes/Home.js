@@ -2,6 +2,7 @@ import { Link } from "react-router-dom"
 import UpcomingEvents from "../components/UpcomingEvents"
 import AboutUs from "../components/AboutUs"
 import ContactUs from "../components/ContactUs"
+import CreateButtonDiv from "../components/CreateButtonDiv"
 
 const Home = () => {
   return (
@@ -10,10 +11,7 @@ const Home = () => {
         <h2>Upcoming Events</h2>
           <UpcomingEvents />
       </div>
-      <div className="create-home-div">
-        <h2>Create your own show here</h2>
-        <button className="home-page-btn"><Link to='/createshow' className='home-page-link'>Create Show</Link></button>
-      </div>
+      <CreateButtonDiv />
       <AboutUs />
       <ContactUs />
     </div>

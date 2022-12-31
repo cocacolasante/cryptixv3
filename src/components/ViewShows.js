@@ -45,6 +45,7 @@ const ViewShows = () => {
                 venueAddress: show.venue,
                 ticketAddress: show.ticketAddress,
                 escrowAddress: show.escrowAddress,
+                showTime: show.showTime.toString(),
                 image: await _getTicketNFTImage(show.ticketAddress)
             }
 
@@ -56,34 +57,38 @@ const ViewShows = () => {
         return output
     }
 
-    
-    const viewAllShows = async () =>{
-        const {ethereum} = window;
-        const provider = new ethers.providers.Web3Provider(ethereum)
-
-        const CreateShowContract = new ethers.Contract(CREATE_SHOW_ADDRESS, createContractAbi.abi, provider)
-
-        const allReturnedShows = await CreateShowContract.returnAllShows()
-
+    const displayShowDate = (seconds) =>{
+        let newSeconds = parseInt(seconds)
+        const newDate = new Date(newSeconds * 1000)
         
-        let output =[]
-        const mappedShows = await Promise.all(allReturnedShows.map(async (i)=>{
-            let returnedShow = [
-                i["showName"],
-                i["band"],
-                i["venue"],
-                i["ticketAddress"],
-                i["escrowAddress"],
-                // await _getTicketNFTImage(i["ticketAddress"])
-            ]
-            
-            output.push(returnedShow)
+        const hour = newDate.getHours()
+        const minutes = newDate.getMinutes()
+        const day = newDate.getDay()
+        const month = newDate.getMonth() + 1
+        const year = newDate.getFullYear()
+        
+        const formatTime = (hours) =>{
+            if(hours > 12){
+                return(
+                    <p>{hours - 12}:{minutes} PM</p>
+                )
+            }else{
+                return(<p>{hours}:{minutes} AM</p>)
+            }
+        }
 
-            console.log(output)
-            return output
-        }))
+        console.log(hour)
+
+        return(
+            <div>
+                <>{formatTime(hour)}</>
+                <p>{month}/{day}/{year}</p>
+            </div>
+        )
 
     }
+
+
 
     const buyTickets = async (e, ticketAddress, show_name, bandaddy, venueAddy) =>{
         console.log(ticketAddress)
@@ -157,19 +162,11 @@ const ViewShows = () => {
 
     }
 
-    const displayTicketNft = (i) =>{
-        return(
-            <div>
-                <img src={_getTicketNFTImage(i)} alt="tickets" />
-            </div>
-        )
-    }
 
 
 
     useEffect(()=>{
         returnAllShows()
-        viewAllShows()
     },[])
 
 
@@ -182,16 +179,20 @@ const ViewShows = () => {
         {!allShows ? <p>Loading Blockchain Data</p> :( allShows.map((i)=>{
             return(
                 <div className='border-radius-outline show-card' key ={i["showNumber"]}>
-                    <h3 >Show Number: {i["showNumber"]}</h3>
-                    <h2>Show Name: {i["ShowName"]}</h2>
+                    <h4>Show Name: {i["ShowName"]}</h4>
                     <img className='thumbnail' src={i["image"] } alt="tickets" />
 
-                    <h3>Band: {i["bandAddress"].slice(0, 6)}...{i["bandAddress"].slice(-6)}</h3>
-                    <h3>Venue: {i["venueAddress"].slice(0, 6)}...{i["venueAddress"].slice(-6)}</h3>
-                    <h3>Tickets: {i["ticketAddress"].slice(0, 6)}...{i["ticketAddress"].slice(-6)}</h3>
+                    <p>Band: {i["bandAddress"].slice(0, 6)}...{i["bandAddress"].slice(-6)}</p>
+                    <p>Venue: {i["venueAddress"].slice(0, 6)}...{i["venueAddress"].slice(-6)}</p>
+                    <p>Tickets: {i["ticketAddress"].slice(0, 6)}...{i["ticketAddress"].slice(-6)}</p>
+
+                    {/* <h4>Date: {displayShowDate(i["showTime"])}</h4> */}
+                    {displayShowDate(i['showTime'])}
+
                     <button value={i} onClick={e=>buyTickets(e.target.value, i["ticketAddress"], i["ShowName"], i["bandAddress"], i["venueAddress"])} >Buy Ticket</button>
 
-                    <button value={i["ticketAddress"]} onClick={e=>_getTicketNFTImage(e.target.value)} >test</button>
+                    <button value={i["showTime"]} onClick={e=>displayShowDate(e.target.value)} >test</button>
+
 
                 </div>
             )

@@ -56,6 +56,12 @@
 
 .show-card{
   max-width: 25%;
+  padding-left: 4px;
+  text-align: center;
+  display: inline-flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 .home-container{

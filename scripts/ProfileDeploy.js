@@ -12,8 +12,13 @@ async function main() {
   await ProfileContract.deployed()
 
   console.log(`Profile Contract Deployed to ${ProfileContract.address}`)
-
-
+  
+  const createProfileNftFactory = await hre.ethers.getContractFactory("Profile")
+  const CreateProfileNft = await createProfileNftFactory.deploy()
+  await CreateProfileNft.deployed()
+  
+  console.log(`Create Profile Contract Deployed to ${CreateProfileNft.address}`)
+  
 }
 
 // We recommend this pattern to be able to use async/await everywhere

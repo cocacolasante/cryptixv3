@@ -122,7 +122,7 @@ const UpcomingEvents = () => {
 
   }
   const buyTickets = async (e, ticketAddress, show_name, bandaddy, venueAddy) =>{
-    console.log(ticketAddress)
+
     try{
         const {ethereum} = window;
         const provider = new ethers.providers.Web3Provider(ethereum)

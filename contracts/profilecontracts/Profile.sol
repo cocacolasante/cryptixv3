@@ -47,5 +47,17 @@ contract Profile {
         purchasedShows[msg.sender].push(newShow);
 
     }
+
+    function returnAllUsersShows(address user) public view returns(address[] memory){
+        address[] memory allUsersShows = new address[](purchasedShows[user].length);
+        uint iterateCount = purchasedShows[user].length;
+        for(uint i; i < iterateCount; i++){
+            allUsersShows[i] = purchasedShows[user][i];
+        }
+
+        return allUsersShows;
+    }
+
     
+
 }

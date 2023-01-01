@@ -3,6 +3,7 @@ pragma solidity ^0.8.9;
 
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
+import "./interfaces/IProfile.sol";
 
 import "./interfaces/IEscrow.sol";
 
@@ -30,6 +31,8 @@ contract Cryptickets is ERC721URIStorage{
     bool public showCancelled;
     bool public showCompleted;
     bool public rescheduled;
+
+    address public ProfileContract = 0x928387a178Cbc40b3bcc188f30540835Aaef7db9;
 
     address[] public allOwners;
 
@@ -59,7 +62,7 @@ contract Cryptickets is ERC721URIStorage{
         ticketsPurchased[msg.sender] += amount;
         allOwners.push(msg.sender);
 
- 
+
         for(uint i; i< amount; i++){
             _tokenIds.increment();
 
@@ -72,6 +75,8 @@ contract Cryptickets is ERC721URIStorage{
         }
 
         payable(escrowAddress).transfer(msg.value);
+        
+        IProfile(ProfileContract).setPurchasedShow(address(this));
 
         emit TicketsPurchased(msg.sender, amount);
 

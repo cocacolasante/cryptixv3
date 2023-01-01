@@ -1,86 +1,82 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
-import CREATE_SHOW_ADDRESS from '../addresses/createShow'
-import createContractAbi from "../abiAssets/createContractAbi.json"
+import PROFILECONTRACTADDRESS from '../addresses/ProfileContract';
+import profileContractAbi from "../abiAssets/profileContractAbi.json"
 import ticketAbi from "../abiAssets/ticketAbi.json"
 
 
-const toWeiStr = (num) => ethers.utils.parseEther(num.toString())
-const toWeiInt = (num) => ethers.utils.parseEther(num) 
-const fromWei = (num) => ethers.utils.formatEther(num)
 
 
 const MyTickets = () => {
     const [myTickets, setMyTickets] = useState()
+    const [activeAccount, setActiveAccount] = useState()
 
 
-    const returnUpcomingShows = async () =>{
+    const returnMyShows = async () =>{
         try {
           const {ethereum} = window;
           if(ethereum){
             const provider = new ethers.providers.Web3Provider(ethereum)
     
-            const CreateShowContract = new ethers.Contract(CREATE_SHOW_ADDRESS, createContractAbi.abi, provider)
-    
-            let currentShowNum = await CreateShowContract.showNumber()
-            currentShowNum++;
+            const ProfileContract = new ethers.Contract(PROFILECONTRACTADDRESS, profileContractAbi.abi, provider)
             
-            let output = []
-            for(let i = 1; i < currentShowNum; i++){
-                const show = await CreateShowContract.allShows(i)
+            const usersShowArray = await ProfileContract.returnAllUsersShows(activeAccount)
 
+            console.log(usersShowArray)
 
-                const returnedShow = {
-                    showNumber: i,
-                    ShowName: show.showName,
-                    bandAddress: show.band,
-                    venueAddress: show.venue,
-                    ticketAddress: show.ticketAddress,
-                    escrowAddress: show.escrowAddress,
-                    showTime: show.showTime.toString(),
-                    showPrice: fromWei(show.price.toString()),
-                    image: await _getTicketNFTImage(show.ticketAddress)
-                }
-                output.push(returnedShow)
-    
-    
-    
-    
-                
-            }
-            output.sort((a,b) =>{
-              return a.showTime - b.showTime
-            })
-    
-            
-    
-            console.log(output)
-            setMyTickets(output)
-    
-            return output
           }
     
         }catch(error){
           console.log(error)
         }
       }
-      const _getTicketNFTImage = async (ticketAddress) =>{
-    
-        const {ethereum } = window;
-        const provider = new ethers.providers.Web3Provider(ethereum)
-        const TicketContract = new ethers.Contract(ticketAddress, ticketAbi.abi, provider)
-    
-        let ticketUri = await TicketContract.baseUri()
-        
-    
-        let response = await fetch(ticketUri)
-        
-        let url = response.url;
-    
-        return url
-    
+    const _getTicketNFTImage = async (ticketAddress) =>{
+  
+      const {ethereum } = window;
+      const provider = new ethers.providers.Web3Provider(ethereum)
+      const TicketContract = new ethers.Contract(ticketAddress, ticketAbi.abi, provider)
+  
+      let ticketUri = await TicketContract.baseUri()
+      
+  
+      let response = await fetch(ticketUri)
+      
+      let url = response.url;
+  
+      return url
+  
+    }
+
+    const checkIfWalletIsConnected = async () =>{
+      try{
+          const {ethereum} = window;
+          if(!ethereum){
+              alert("Please install metamask")
+              return;
+          }else{
+              console.log("Ethereum Detected")
+
+          }
+          const accounts = await ethereum.request({method: "eth_accounts"})
+          if(accounts.length !== 0 ){
+              setActiveAccount(accounts[0]);
+              console.log(`connected to ${accounts[0]}`)
+
+          }
+
+
+      }catch(error){
+          console.log(error)
       }
+  }
+
+  useEffect(()=>{
+      checkIfWalletIsConnected();
+      returnMyShows();
+  },[])
+
+
   return (
     <div>MyTickets</div>
   )

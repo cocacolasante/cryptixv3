@@ -72,7 +72,7 @@ const CreateShow = () => {
 
             if(res.status === 1){
                 console.log("success")
-                alert("Success, please refresh page")
+                alert("Success")
             }else{
                 console.log("failed")
             }

@@ -3,7 +3,7 @@ const {ethers} = require("hardhat")
 
 describe("PRofile Contract", () =>{
     const SAMPLE_URI = "SAMPLEURI"
-    let ProfileContract, deployer, user1, user2, user3, CreateProfileContract
+    let ProfileContract, deployer, user1, user2, user3, CreateProfileContract, EscrowContract, CryptixNFTContract, band, venue
     beforeEach(async () =>{
         const accounts = await ethers.getSigners()
 
@@ -11,6 +11,9 @@ describe("PRofile Contract", () =>{
         user1 = accounts[1]
         user2 = accounts[2]
         user3 = accounts[3]
+        band = accounts[4]
+        venue = accounts[5]
+        
 
         const profileContractFactory = await ethers.getContractFactory("Profile")
         ProfileContract = await profileContractFactory.deploy()
@@ -19,6 +22,17 @@ describe("PRofile Contract", () =>{
         const createProfileContractFactory = await ethers.getContractFactory("CreateProfileNFT")
         CreateProfileContract = await createProfileContractFactory.deploy()
         await CreateProfileContract.deployed()
+
+        const escrowContractFactory = await ethers.getContractFactory("Escrow")
+        EscrowContract = await escrowContractFactory.deploy()
+        await EscrowContract.deployed()
+
+        const cryptixContractFactory = await ethers.getContractFactory("Cryptickets")
+        CryptixNFTContract = await cryptixContractFactory.deploy("Test1", "tst1", EscrowContract.address, band.address, venue.address, 1000, 100)
+        await CryptixNFTContract.deployed()
+
+        await EscrowContract.connect(deployer).setTicketContract(CryptixNFTContract.address);
+
 
 
     })
@@ -65,7 +79,18 @@ describe("PRofile Contract", () =>{
             expect(await ProfileContract.purchasedShows(user1.address, 0)).to.equal("0xDb157145A5A8Cd553F86c30516AF373a78a47Bbf")
 
         })
-    })
+        it("checks the return all shows function", async () =>{
+            await ProfileContract.connect(user1).setPurchasedShow("0xDb157145A5A8Cd553F86c30516AF373a78a47Bbf")
+            await ProfileContract.connect(user1).setPurchasedShow("0x9E2e3A8295bDe588030B734eB471600154B8678e")
+            const user1Shows = await ProfileContract.returnAllUsersShows(user1.address)
+            console.log(user1Shows)
 
+        })
+        // it("checks the show was added to hte profile on purchase", async () =>{
+        //     await CryptixNFTContract.connect(user1).purchaseTickets(1, SAMPLE_URI, {value: 100})
+        //     expect(await ProfileContract.purchasedShows(user1.address, 0)).to.equal(CryptixNFTContract.address)
+            
+        // })
+    })
     
 })

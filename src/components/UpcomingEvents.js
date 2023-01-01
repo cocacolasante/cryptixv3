@@ -65,6 +65,8 @@ const UpcomingEvents = () => {
           return a.showTime - b.showTime
         })
 
+        output.length = 8
+
         console.log(output)
         setUpcomingShows(output)
 
@@ -90,73 +92,73 @@ const UpcomingEvents = () => {
 
     return url
 
-}
-
-const displayShowDate = (seconds) =>{
-  let newSeconds = parseInt(seconds)
-  const newDate = new Date(newSeconds * 1000)
-  
-  const hour = newDate.getHours()
-  const minutes = newDate.getMinutes()
-  const day = newDate.getDay()
-  const month = newDate.getMonth() + 1
-  const year = newDate.getFullYear()
-  
-  const formatTime = (hours) =>{
-      if(hours > 12){
-          return(
-              <p>{hours - 12}:{minutes} PM {month}/{day}/{year}</p>
-          )
-      }else{
-          return(<p>{hours}:{minutes} AM {month}/{day}/{year}</p>)
-      }
   }
 
-  return(
-      <div>
-          <>{formatTime(hour)}</>
-      </div>
-  )
+  const displayShowDate = (seconds) =>{
+    let newSeconds = parseInt(seconds)
+    const newDate = new Date(newSeconds * 1000)
+    
+    const hour = newDate.getHours()
+    const minutes = newDate.getMinutes()
+    const day = newDate.getDay()
+    const month = newDate.getMonth() + 1
+    const year = newDate.getFullYear()
+    
+    const formatTime = (hours) =>{
+        if(hours > 12){
+            return(
+                <p>{hours - 12}:{minutes} PM {month}/{day}/{year}</p>
+            )
+        }else{
+            return(<p>{hours}:{minutes} AM {month}/{day}/{year}</p>)
+        }
+    }
 
-}
-const buyTickets = async (e, ticketAddress, show_name, bandaddy, venueAddy) =>{
-  console.log(ticketAddress)
-  try{
-      const {ethereum} = window;
-      const provider = new ethers.providers.Web3Provider(ethereum)
-      const signer = provider.getSigner()
+    return(
+        <div>
+            <>{formatTime(hour)}</>
+        </div>
+    )
 
-      const TicketContract = new ethers.Contract(ticketAddress, ticketAbi.abi, signer)
-
-      let baseURI = await TicketContract.baseUri()
-      let ticketNumber = await TicketContract._tokenIds()
-      let ticketPrice = await TicketContract.ticketPrice()
-      ticketPrice= ticketPrice.toString()
-      console.log(baseURI)
-      console.log(ticketPrice)
-
-
-      let result = await client.add(JSON.stringify({ShowName: show_name,Band: bandaddy, Venue: venueAddy, TicketNumber: ticketNumber.toString(), image: baseURI  }))
-
-      console.log(`https://cryptix.infura-ipfs.io/ipfs/${result.path}`)
-
-      let txn = await TicketContract.purchaseTickets(1, `https://cryptix.infura-ipfs.io/ipfs/${result.path}`, {value: ticketPrice})
-      let res = await txn.wait()
-
-      const currentTix = await TicketContract._tokenIds()
-      console.log(currentTix.toString())
-
-      if(res.status === 1){
-          console.log("Success")
-          
-      }else{
-          console.log("Failed")
-      }
-
-  }catch(error){
-      console.log(error)
   }
-}
+  const buyTickets = async (e, ticketAddress, show_name, bandaddy, venueAddy) =>{
+    console.log(ticketAddress)
+    try{
+        const {ethereum} = window;
+        const provider = new ethers.providers.Web3Provider(ethereum)
+        const signer = provider.getSigner()
+
+        const TicketContract = new ethers.Contract(ticketAddress, ticketAbi.abi, signer)
+
+        let baseURI = await TicketContract.baseUri()
+        let ticketNumber = await TicketContract._tokenIds()
+        let ticketPrice = await TicketContract.ticketPrice()
+        ticketPrice= ticketPrice.toString()
+        console.log(baseURI)
+        console.log(ticketPrice)
+
+
+        let result = await client.add(JSON.stringify({ShowName: show_name,Band: bandaddy, Venue: venueAddy, TicketNumber: ticketNumber.toString(), image: baseURI  }))
+
+        console.log(`https://cryptix.infura-ipfs.io/ipfs/${result.path}`)
+
+        let txn = await TicketContract.purchaseTickets(1, `https://cryptix.infura-ipfs.io/ipfs/${result.path}`, {value: ticketPrice})
+        let res = await txn.wait()
+
+        const currentTix = await TicketContract._tokenIds()
+        console.log(currentTix.toString())
+
+        if(res.status === 1){
+            console.log("Success")
+            
+        }else{
+            console.log("Failed")
+        }
+
+    }catch(error){
+        console.log(error)
+    }
+  }
 
 const displayEventCard = () =>{
   return(

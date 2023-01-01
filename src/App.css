@@ -201,3 +201,8 @@
 .view-shows-div{
   padding-bottom: 25px;
 }
+
+.spacing-div{
+  width: 80%;
+  height: 20vh;
+}

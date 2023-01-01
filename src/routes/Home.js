@@ -12,8 +12,9 @@ const Home = () => {
           <UpcomingEvents />
       </div>
       <CreateButtonDiv />
+      <div className="spacing-div"></div>
       <AboutUs />
-      <br />
+      <div className="spacing-div"></div>
       <ContactUs />
     </div>
   )

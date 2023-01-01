@@ -6,9 +6,9 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 
 contract Profile {
 
-
     mapping(address => UserProfile) public users;
 
+    mapping(address=>address[]) public purchasedShows; 
 
     struct UserProfile{
         address user;
@@ -36,6 +36,12 @@ contract Profile {
         require(msg.sender == users[msg.sender].user, "only can update own profile");
 
         users[msg.sender].statusMessage = newStatus;
+        
+    }
+
+    function setPurchasedShow(address newShow) public {
+        require(msg.sender == users[msg.sender]. user, "only user can update own profile");
+        purchasedShows[msg.sender].push(newShow);
         
     }
 }

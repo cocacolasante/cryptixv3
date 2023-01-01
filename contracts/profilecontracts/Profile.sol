@@ -3,6 +3,7 @@ pragma solidity ^0.8.9;
 
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
+import "@openzeppelin/contracts/interfaces/IERC721.sol";
 
 contract Profile {
 
@@ -27,6 +28,8 @@ contract Profile {
 
     function setProfileNFt(address nftContract, uint tokenId) public {
         require(msg.sender == users[msg.sender].user, "can only update your own profile");
+        require(msg.sender == IERC721(nftContract).ownerOf(tokenId), "incorrect nft owner");
+
         users[msg.sender].profileNFT = nftContract;
         users[msg.sender].tokenId = tokenId;
 
@@ -42,6 +45,7 @@ contract Profile {
     function setPurchasedShow(address newShow) public {
         require(msg.sender == users[msg.sender]. user, "only user can update own profile");
         purchasedShows[msg.sender].push(newShow);
-        
+
     }
+    
 }

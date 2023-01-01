@@ -6,6 +6,7 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 
 import "./interfaces/IEscrow.sol";
 
+
 import "hardhat/console.sol";
 
 contract Cryptickets is ERC721URIStorage{
@@ -57,6 +58,7 @@ contract Cryptickets is ERC721URIStorage{
 
         ticketsPurchased[msg.sender] += amount;
         allOwners.push(msg.sender);
+
  
         for(uint i; i< amount; i++){
             _tokenIds.increment();

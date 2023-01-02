@@ -7,6 +7,8 @@ import { Buffer } from "buffer";
 import CREATE_SHOW_ADDRESS from '../addresses/createShow'
 import createContractAbi from "../abiAssets/createContractAbi.json"
 import ticketAbi from "../abiAssets/ticketAbi.json"
+import PROFILECONTRACTADDRESS from '../addresses/ProfileContract';
+import profileContractAbi from "../abiAssets/profileContractAbi.json"
 
 
 const toWeiStr = (num) => ethers.utils.parseEther(num.toString())
@@ -162,7 +164,23 @@ const ViewShows = () => {
 
     }
 
-
+    const addToMyTickets = async (e, ticketAddress) =>{
+        const provider = new ethers.providers.Web3Provider(window.ethereum)
+        const signer = provider.getSigner()
+        const ProfileContract = new ethers.Contract(PROFILECONTRACTADDRESS, profileContractAbi.abi, signer)
+    
+        let tx, res
+    
+        tx = await ProfileContract.setPurchasedShow(ticketAddress)
+        res = await tx.wait()
+    
+        if(res.status ===1 ){
+          alert("Successfully Added")
+        } else{
+          alert("failed")
+        }
+    
+      }
 
 
     useEffect(()=>{
@@ -191,6 +209,7 @@ const ViewShows = () => {
                     {displayShowDate(i['showTime'])}
 
                     <button value={i} onClick={e=>buyTickets(e.target.value, i["ticketAddress"], i["ShowName"], i["bandAddress"], i["venueAddress"])} >Buy Ticket</button>
+                    <button value={i} onClick={e=>addToMyTickets(e, i["ticketAddress"])}>Add to MyTix</button>
                 </div>
             )
         })) }

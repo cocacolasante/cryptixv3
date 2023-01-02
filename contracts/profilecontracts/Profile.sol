@@ -27,7 +27,6 @@ contract Profile {
     }
 
     function setProfileNFt(address nftContract, uint tokenId) public {
-        require(msg.sender == users[msg.sender].user, "can only update your own profile");
         require(msg.sender == IERC721(nftContract).ownerOf(tokenId), "incorrect nft owner");
 
         users[msg.sender].profileNFT = nftContract;
@@ -36,14 +35,12 @@ contract Profile {
     }
 
     function setMessage(string memory newStatus) public{
-        require(msg.sender == users[msg.sender].user, "only can update own profile");
 
         users[msg.sender].statusMessage = newStatus;
         
     }
 
     function setPurchasedShow(address newShow) public {
-        require(msg.sender == users[msg.sender]. user, "only user can update own profile");
         purchasedShows[msg.sender].push(newShow);
 
     }

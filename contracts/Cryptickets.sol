@@ -76,8 +76,6 @@ contract Cryptickets is ERC721URIStorage{
 
         payable(escrowAddress).transfer(msg.value);
         
-        IProfile(ProfileContract).setPurchasedShow(address(this));
-
         emit TicketsPurchased(msg.sender, amount);
 
     }

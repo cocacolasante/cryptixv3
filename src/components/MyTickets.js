@@ -1,4 +1,3 @@
-import React from 'react'
 import { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
 import PROFILECONTRACTADDRESS from '../addresses/ProfileContract';
@@ -13,19 +12,24 @@ const MyTickets = () => {
     const [activeAccount, setActiveAccount] = useState()
 
 
-    const returnMyShows = async () =>{
+    const displayMyTickets = ()  =>{
+      
+    }
+
+    const returnMyShows = async (account) =>{
         try {
-          const {ethereum} = window;
-          if(ethereum){
-            const provider = new ethers.providers.Web3Provider(ethereum)
-    
-            const ProfileContract = new ethers.Contract(PROFILECONTRACTADDRESS, profileContractAbi.abi, provider)
-            
-            const usersShowArray = await ProfileContract.returnAllUsersShows(activeAccount)
 
-            console.log(usersShowArray)
+          const provider = new ethers.providers.Web3Provider(window.ethereum)
+          
+  
+          const ProfileContract = new ethers.Contract(PROFILECONTRACTADDRESS, profileContractAbi.abi, provider)
+          
+          const usersShowArray = await ProfileContract.returnAllUsersShows(account)
 
-          }
+          
+
+          setMyTickets(usersShowArray)
+
     
         }catch(error){
           console.log(error)
@@ -63,18 +67,20 @@ const MyTickets = () => {
               setActiveAccount(accounts[0]);
               console.log(`connected to ${accounts[0]}`)
 
+              returnMyShows(accounts[0])
+
           }
 
 
       }catch(error){
           console.log(error)
       }
-  }
+    }
 
   useEffect(()=>{
       checkIfWalletIsConnected();
-      returnMyShows();
-  },[])
+
+    },[])
 
 
   return (

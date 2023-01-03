@@ -17,6 +17,9 @@ contract CreatorContract{
     address public createTickAdd;
 
     mapping(uint => Show) public allShows;
+    
+    // mapping by ticket address
+    mapping(address => Show) public showAddress;
 
     struct Show{
         string showName;
@@ -54,6 +57,8 @@ contract CreatorContract{
         newEscrow.setTicketContract(address(newTickets));
 
         allShows[showNumber] = Show(_name, address(newTickets), address(newEscrow),newController, _bandAddress, _venueAddress, endTime, price, false);
+        
+        showAddress[address(newTickets)] = Show(_name, address(newTickets), address(newEscrow),newController, _bandAddress, _venueAddress, endTime, price, false);
         
 
     }

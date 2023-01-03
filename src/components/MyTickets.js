@@ -1,20 +1,38 @@
 import { useState, useEffect } from 'react';
-import { ethers } from 'ethers';
+import { create as ipfsClient} from "ipfs-http-client"
+import {ethers} from "ethers"
+import env from "react-dotenv";
+import { Buffer } from "buffer";
 import PROFILECONTRACTADDRESS from '../addresses/ProfileContract';
+import CREATE_SHOW_ADDRESS from '../addresses/createShow'
+import createContractAbi from "../abiAssets/createContractAbi.json"
 import profileContractAbi from "../abiAssets/profileContractAbi.json"
 import ticketAbi from "../abiAssets/ticketAbi.json"
 
 
+const toWeiStr = (num) => ethers.utils.parseEther(num.toString())
+const toWeiInt = (num) => ethers.utils.parseEther(num) 
+const fromWei = (num) => ethers.utils.formatEther(num)
+
+const auth =
+  'Basic ' + Buffer.from(env.PROJECT_ID + ':' + env.PROJECT_CODE).toString('base64');
+
+const client = ipfsClient({
+    host: 'ipfs.infura.io',
+    port: 5001,
+    protocol: 'https',
+    headers: {
+        authorization: auth,
+        },
+    });
 
 
 const MyTickets = () => {
     const [myTickets, setMyTickets] = useState()
+    const [myTixAddress, setMyTixAddress] = useState()
     const [activeAccount, setActiveAccount] = useState()
 
 
-    const displayMyTickets = ()  =>{
-      
-    }
 
     const returnMyShows = async (account) =>{
         try {
@@ -25,23 +43,126 @@ const MyTickets = () => {
           const ProfileContract = new ethers.Contract(PROFILECONTRACTADDRESS, profileContractAbi.abi, provider)
           
           const usersShowArray = await ProfileContract.returnAllUsersShows(account)
-
+          setMyTixAddress(usersShowArray)
+          console.log(usersShowArray)
+          
           // get contract instances for all purchased tickets
           // map through createContract Show datas and filter by ticket address to match those from usersShowArray
-          for(let i=0; i< usersShowArray.length; i++){
-
-          }
-          // pull base uri from ticket contracts
-          // 
+          const CreateShowContract = new ethers.Contract(CREATE_SHOW_ADDRESS, createContractAbi.abi, provider)
           
+          let output=[]
+          
+         for(let i = 0; i<usersShowArray.length; i++){
+            const show = await CreateShowContract.showAddress(usersShowArray[i])
+            const returnedShow = {
+              showNumber: i,
+              ShowName: show.showName,
+              bandAddress: show.band,
+              venueAddress: show.venue,
+              ticketAddress: show.ticketAddress,
+              escrowAddress: show.escrowAddress,
+              showTime: show.showTime.toString(),
+              showPrice: fromWei(show.price.toString()),
+              image: await _getTicketNFTImage(show.ticketAddress)
+          }
+          output.push(returnedShow)
 
-          setMyTickets(usersShowArray)
 
-    
+         }
+
+          setMyTickets(output)
+          console.log(output)
+
         }catch(error){
           console.log(error)
         }
       }
+      const displayShowDate = (seconds) =>{
+        let newSeconds = parseInt(seconds)
+        const newDate = new Date(newSeconds * 1000)
+        
+        const hour = newDate.getHours()
+        const minutes = newDate.getMinutes()
+        const day = newDate.getDay()
+        const month = newDate.getMonth() + 1
+        const year = newDate.getFullYear()
+        
+        const formatTime = (hours) =>{
+            if(hours > 12){
+                return(
+                    <p>{hours - 12}:{minutes} PM {month}/{day}/{year}</p>
+                )
+            }else{
+                return(<p>{hours}:{minutes} AM {month}/{day}/{year}</p>)
+            }
+        }
+    
+        return(
+            <div>
+                <>{formatTime(hour)}</>
+            </div>
+        )
+    
+      }
+      const buyTickets = async (e, ticketAddress, show_name, bandaddy, venueAddy) =>{
+
+        try{
+            const {ethereum} = window;
+            const provider = new ethers.providers.Web3Provider(ethereum)
+            const signer = provider.getSigner()
+    
+            const TicketContract = new ethers.Contract(ticketAddress, ticketAbi.abi, signer)
+    
+            let baseURI = await TicketContract.baseUri()
+            let ticketNumber = await TicketContract._tokenIds()
+            let ticketPrice = await TicketContract.ticketPrice()
+            ticketPrice= ticketPrice.toString()
+            console.log(baseURI)
+            console.log(ticketPrice)
+    
+    
+            let result = await client.add(JSON.stringify({ShowName: show_name,Band: bandaddy, Venue: venueAddy, TicketNumber: ticketNumber.toString(), image: baseURI  }))
+    
+            console.log(`https://cryptix.infura-ipfs.io/ipfs/${result.path}`)
+    
+            let txn = await TicketContract.purchaseTickets(1, `https://cryptix.infura-ipfs.io/ipfs/${result.path}`, {value: ticketPrice})
+            let res = await txn.wait()
+    
+            const currentTix = await TicketContract._tokenIds()
+            console.log(currentTix.toString())
+    
+            if(res.status === 1){
+                console.log("Success")
+                
+            }else{
+                console.log("Failed")
+            }
+    
+        }catch(error){
+            console.log(error)
+        }
+      }
+
+    const displayMyTickets = () =>{
+      myTickets.map((i)=>{
+        console.log(i)
+        return(
+          <div className='border-radius-outline show-card' key ={i["showNumber"]}>
+              <h4>Show Name: {i["ShowName"]}</h4>
+              <img className='thumbnail' src={i["image"] } alt="tickets" />
+
+              <p>Band: {i["bandAddress"].slice(0, 6)}...{i["bandAddress"].slice(-6)}</p>
+              <p>Venue: {i["venueAddress"].slice(0, 6)}...{i["venueAddress"].slice(-6)}</p>
+              <p>Tickets: {i["ticketAddress"].slice(0, 6)}...{i["ticketAddress"].slice(-6)}</p>
+              <p>Price: {i["showPrice"]}</p>
+
+              {displayShowDate(i['showTime'])}
+
+              <button value={i} onClick={e=>buyTickets(e.target.value, i["ticketAddress"], i["ShowName"], i["bandAddress"], i["venueAddress"])} >Buy Ticket</button>
+          </div>
+        )
+      })
+    }
     const _getTicketNFTImage = async (ticketAddress) =>{
   
       const {ethereum } = window;
@@ -86,12 +207,32 @@ const MyTickets = () => {
 
   useEffect(()=>{
       checkIfWalletIsConnected();
+      returnMyShows()
 
     },[])
 
 
   return (
-    <div>MyTickets</div>
+    <div>
+      {!myTickets ? <p>No Tickets</p> : myTickets.map((i)=>{
+        console.log(i)
+        return(
+          <div className='border-radius-outline show-card' key ={i["showNumber"]}>
+              <h4>Show Name: {i["ShowName"]}</h4>
+              <img className='thumbnail' src={i["image"] } alt="tickets" />
+
+              <p>Band: {i["bandAddress"].slice(0, 6)}...{i["bandAddress"].slice(-6)}</p>
+              <p>Venue: {i["venueAddress"].slice(0, 6)}...{i["venueAddress"].slice(-6)}</p>
+              <p>Tickets: {i["ticketAddress"].slice(0, 6)}...{i["ticketAddress"].slice(-6)}</p>
+              <p>Price: {i["showPrice"]}</p>
+
+              {displayShowDate(i['showTime'])}
+
+              <button value={i} onClick={e=>buyTickets(e.target.value, i["ticketAddress"], i["ShowName"], i["bandAddress"], i["venueAddress"])} >Buy Ticket</button>
+          </div>
+        )
+      })}
+    </div>
   )
 }
 

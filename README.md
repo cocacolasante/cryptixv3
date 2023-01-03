@@ -1,13 +1,5 @@
-# Sample Hardhat Project
+TO DO:
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
-
-Try running some of the following tasks:
-
-```shell
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat run scripts/deploy.js
-```
+redeploy contracts with updated mapping
+use updated mapping to return ticket contracts by address 
+use mapping to display users tickets

@@ -6,7 +6,10 @@ const Browse = () => {
     <div className="create-show-div create-container">
       <h1>Browse</h1>
       <ViewShows />
+      <div className="spacing-div"></div>
       <CreateButtonDiv />
+      <div className="spacing-div"></div>
+
     </div>
   )
 }

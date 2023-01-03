@@ -11,6 +11,7 @@ const Home = () => {
         <h2>Upcoming Events</h2>
           <UpcomingEvents />
       </div>
+      <div className="spacing-div"></div>
       <CreateButtonDiv />
       <div className="spacing-div"></div>
       <AboutUs />

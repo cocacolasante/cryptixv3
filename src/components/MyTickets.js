@@ -26,6 +26,13 @@ const MyTickets = () => {
           
           const usersShowArray = await ProfileContract.returnAllUsersShows(account)
 
+          // get contract instances for all purchased tickets
+          // map through createContract Show datas and filter by ticket address to match those from usersShowArray
+          for(let i=0; i< usersShowArray.length; i++){
+
+          }
+          // pull base uri from ticket contracts
+          // 
           
 
           setMyTickets(usersShowArray)

@@ -5,6 +5,8 @@ const CreatePage = () => {
   return (
     <div className="create-container">
         <CreateShow />
+        <div className="spacing-div"></div>
+
     </div>
   )
 }

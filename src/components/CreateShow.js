@@ -6,6 +6,11 @@ import { Buffer } from "buffer";
 import CREATE_SHOW_ADDRESS from '../addresses/createShow'
 import createContractAbi from "../abiAssets/createContractAbi.json"
 import controllerAbi from "../abiAssets/controllerAbi.json"
+import profileContractAbi from "../abiAssets/profileContractAbi.json"
+import PROFILECONTRACTADDRESS from '../addresses/ProfileContract';
+
+
+
 
 const auth =
   'Basic ' + Buffer.from(env.PROJECT_ID + ':' + env.PROJECT_CODE).toString('base64');
@@ -131,6 +136,7 @@ const CreateShow = () => {
                 const currentShowNum = await CreateShowContract.showNumber()
                 const currentShowStruct = await CreateShowContract.allShows(currentShowNum)
                 const ControllerAddress = currentShowStruct.controllerContract;
+                const tixShowAddress = currentShowStruct.ticketAddress;
                 console.log(ControllerAddress)
 
                 setController(ControllerAddress)
@@ -144,10 +150,23 @@ const CreateShow = () => {
                 
                 if(res.status === 1){
                     console.log("success")
+                    alert("Add created event to your profile")
+                }else{
+                    console.log("failed")
+                }
+                
+
+                const ProfileContract = new ethers.Contract(PROFILECONTRACTADDRESS, profileContractAbi.abi, signer)
+                txn = await ProfileContract.setCreatedShow(tixShowAddress)
+                res = await txn.wait()
+
+                if(res.status === 1){
+                    console.log("success")
                     alert("Please upload nft image next")
                 }else{
                     console.log("failed")
                 }
+
             }
 
 

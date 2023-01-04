@@ -14,7 +14,7 @@ const fromWei = (num) => ethers.utils.formatEther(num)
 
 const MyEvents = () => {
   let params = useParams()
-  const [myEvents, setMyEvents] = useState(null)
+  const [myEvents, setMyEvents] = useState()
   const [myEventAddress, setMyEventAddress] = useState()
   const[activeAccount, setActiveAccount] = useState()
 
@@ -122,7 +122,7 @@ const MyEvents = () => {
             setActiveAccount(accounts[0]);
             console.log(`connected to ${accounts[0]}`)
 
-            
+            returnMyEvents(accounts[0])
 
         }
 
@@ -135,7 +135,7 @@ const MyEvents = () => {
 
   useEffect(()=>{
     checkIfWalletIsConnected()
-    returnMyEvents(activeAccount)
+    
   },[])
   
   return (
@@ -154,7 +154,7 @@ const MyEvents = () => {
 
         {displayShowDate(i['showTime'])}
         
-        <Link to={`/manageshows/:${i["controllerContract"]}`} >Manage Event</Link>
+        <Link to={`/manage/${i["controllerContract"]}`} >Manage Event</Link>
 
     </div>
       )

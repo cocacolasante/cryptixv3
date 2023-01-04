@@ -12,7 +12,7 @@ const ManageShows = () => {
       <h2>Manage Your Shows</h2>
       <Routes>
             <Route index element={<MyEvents />} />
-                <Route path="manageshows/:address" element={<EventManage />} />
+                <Route path="/:address" element={<EventManage />} />
             </Routes>
         <div className="spacing-div"></div>
     </div>

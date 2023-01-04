@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import {ethers} from "ethers"
 import { useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 import PROFILECONTRACTADDRESS from '../addresses/ProfileContract';
 import profileContractAbi from "../abiAssets/profileContractAbi.json"
 import ticketAbi from "../abiAssets/ticketAbi.json"
@@ -101,7 +100,9 @@ const EventManage = () => {
       console.log(params)
     },[])
   return (
-    <div>EventManage</div>
+    <div>
+        <p>Ticket Contract: {params.address}</p>
+    </div>
   )
 }
 

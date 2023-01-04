@@ -206,3 +206,24 @@
   width: 80%;
   height: 20vh;
 }
+.smaller-spacing-div{
+  width: 80%;
+  height: 10vh;
+}
+
+.instruction-div{
+  line-height: 30px;
+
+}
+.instruction-header-div{
+  text-align: center;
+}
+.instructions-header{
+  font-family: cursive;
+  font-size: 2.5rem;
+
+}
+
+.instruct-div{
+  background-color: whitesmoke;
+}

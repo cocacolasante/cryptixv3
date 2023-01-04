@@ -43,7 +43,6 @@ contract CreatorContract{
     function createShow(string memory _name, string memory _symbol, address _bandAddress, address _venueAddress, uint endDate, uint price) public{
         showNumber++;
         
-
         uint endTime = endDate + block.timestamp;
 
         Escrow newEscrow = new Escrow();

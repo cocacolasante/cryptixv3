@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import PROFILECONTRACTADDRESS from '../addresses/ProfileContract';
 import profileContractAbi from "../abiAssets/profileContractAbi.json"
 import ticketAbi from "../abiAssets/ticketAbi.json"
+import controllerAbi from "../abiAssets/controllerAbi.json"
 
 const toWeiStr = (num) => ethers.utils.parseEther(num.toString())
 const toWeiInt = (num) => ethers.utils.parseEther(num) 
@@ -19,6 +20,14 @@ const EventManage = () => {
     const returnControllerInfo = async () =>{
         try{
             const provider = await ethers.providers.Web3Provider(window.ethereum)
+
+            const ControllerContract = new ethers.Contract(params.address, controllerAbi.abi, provider)
+
+            const ticketAddress = await ControllerContract.ticketContract()
+
+            const TicketContract = new ethers.Contract(ticketAddress, ticketAbi.abi, provider)
+
+            
             
 
         }catch(error){

@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Outlet } from 'react-router';
 import {Link } from "react-router-dom"
+import { networks } from '../networkutils/networks';
 
 const Navbar = () => {
     const [activeAccount, setActiveAccount] = useState()
+    const [ network, setNetwork] = useState()
 
     const connectWallet = async () =>{
         try{
@@ -38,6 +40,15 @@ const Navbar = () => {
                 console.log(`connected to ${activeAccount}`)
 
             }
+            const chainId = await ethereum.request({method: "eth_chainId"})
+
+            setNetwork(networks[chainId])
+
+            ethereum.on('chainChanged', handleChainChanged);
+
+            function handleChainChanged(_chainId) {
+                window.location.reload();
+            }
 
 
         }catch(error){
@@ -52,7 +63,7 @@ const Navbar = () => {
 
   return (
     <div className=''>
-
+        
 
         <div className='navbar-div top-div-container'>
             <h2 className='logo-div'>Cryptix</h2>
@@ -66,7 +77,7 @@ const Navbar = () => {
                 </ul>
             </div>
             <div className='connect-div'>
-                {!activeAccount ? <button onClick={connectWallet}>Connect Wallet</button> : <p>{activeAccount.slice(0, 6)}...{activeAccount.slice(-4)} </p>}
+            {network !== "Polygon Mumbai Testnet" ? <p>Wrong Network</p> : !activeAccount ? <button onClick={connectWallet}>Connect Wallet</button> : <p>{activeAccount.slice(0, 6)}...{activeAccount.slice(-4)} </p>}
 
             </div>
         </div>

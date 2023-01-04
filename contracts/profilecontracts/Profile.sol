@@ -11,6 +11,8 @@ contract Profile {
 
     mapping(address=>address[]) public purchasedShows; 
 
+    mapping(address=>address[]) public createdShows;
+
     struct UserProfile{
         address user;
         address profileNFT;
@@ -44,6 +46,10 @@ contract Profile {
         purchasedShows[msg.sender].push(newShow);
 
     }
+    function setCreatedShow(address newShow) public {
+        createdShows[msg.sender].push(newShow);
+
+    }
 
     function returnAllUsersShows(address user) public view returns(address[] memory){
         address[] memory allUsersShows = new address[](purchasedShows[user].length);
@@ -53,6 +59,15 @@ contract Profile {
         }
 
         return allUsersShows;
+    }
+    function returnAllUsersEvents(address user) public view returns(address[] memory){
+        address[] memory allUsersEvents = new address[](createdShows[user].length);
+        uint iterateCount = createdShows[user].length;
+        for(uint i; i < iterateCount; i++){
+            allUsersEvents[i] = createdShows[user][i];
+        }
+
+        return allUsersEvents;
     }
 
     

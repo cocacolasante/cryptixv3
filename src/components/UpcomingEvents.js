@@ -149,15 +149,27 @@ const UpcomingEvents = () => {
         let txn = await TicketContract.purchaseTickets(1, `https://cryptix.infura-ipfs.io/ipfs/${result.path}`, {value: ticketPrice})
         let res = await txn.wait()
 
-        const currentTix = await TicketContract._tokenIds()
-        console.log(currentTix.toString())
 
+        
         if(res.status === 1){
             console.log("Success")
             
         }else{
             console.log("Failed")
         }
+
+        const ProfileContract = new ethers.Contract(PROFILECONTRACTADDRESS, profileContractAbi.abi, signer)
+
+    
+        txn = await ProfileContract.setPurchasedShow(ticketAddress)
+        res = await txn.wait()
+    
+        if(res.status ===1 ){
+          alert("Successfully Added")
+        } else{
+          alert("failed")
+        }
+    
 
     }catch(error){
         console.log(error)
@@ -195,6 +207,7 @@ const displayEventCard = () =>{
               <p>Band: {i["bandAddress"].slice(0, 6)}...{i["bandAddress"].slice(-6)}</p>
               <p>Venue: {i["venueAddress"].slice(0, 6)}...{i["venueAddress"].slice(-6)}</p>
               <p>Tickets: {i["ticketAddress"].slice(0, 6)}...{i["ticketAddress"].slice(-6)}</p>
+
               <p>Price: {i["showPrice"]}</p>
 
               {/* <h4>Date: {displayShowDate(i["showTime"])}</h4> */}

@@ -14,7 +14,7 @@ function App() {
       <Route path='/' element={ <Navbar />} >
         <Route index element={ <Home />} />
         <Route path='/browse/*' element={<Browse />} />
-        <Route path='/manageshows' element={<ManageShows />} />
+        <Route path='/manage/*' element={<ManageShows />} />
         <Route path='/createshow' element={<CreatePage />} />
         <Route path='/profile' element={<Profile />} />
 

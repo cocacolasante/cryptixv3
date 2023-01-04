@@ -44,7 +44,6 @@ const MyTickets = () => {
           
           const usersShowArray = await ProfileContract.returnAllUsersShows(account)
           setMyTixAddress(usersShowArray)
-          console.log(usersShowArray)
           
           // get contract instances for all purchased tickets
           // map through createContract Show datas and filter by ticket address to match those from usersShowArray
@@ -71,7 +70,6 @@ const MyTickets = () => {
          }
 
           setMyTickets(output)
-          console.log(output)
 
         }catch(error){
           console.log(error)
@@ -136,6 +134,18 @@ const MyTickets = () => {
                 
             }else{
                 console.log("Failed")
+            }
+
+            const ProfileContract = new ethers.Contract(PROFILECONTRACTADDRESS, profileContractAbi.abi, signer)
+
+    
+            txn = await ProfileContract.setPurchasedShow(ticketAddress)
+            res = await txn.wait()
+        
+            if(res.status ===1 ){
+              alert("Successfully Added")
+            } else{
+              alert("failed")
             }
     
         }catch(error){
@@ -215,7 +225,6 @@ const MyTickets = () => {
   return (
     <div>
       {!myTickets ? <p>No Tickets</p> : myTickets.map((i)=>{
-        console.log(i)
         return(
           <div className='border-radius-outline show-card' key ={i["showNumber"]}>
               <h4>Show Name: {i["ShowName"]}</h4>

@@ -77,7 +77,7 @@ const Navbar = () => {
                 </ul>
             </div>
             <div className='connect-div'>
-            {network !== "Polygon Mumbai Testnet" ? <p>Wrong Network</p> : !activeAccount ? <button onClick={connectWallet}>Connect Wallet</button> : <p>{activeAccount.slice(0, 6)}...{activeAccount.slice(-4)} </p>}
+            {network !== "Polygon Mumbai Testnet" ? <p>Please connect to mumbai testnet</p> : !activeAccount ? <button onClick={connectWallet}>Connect Wallet</button> : <p>{activeAccount.slice(0, 6)}...{activeAccount.slice(-4)} </p>}
 
             </div>
         </div>

@@ -110,7 +110,11 @@ const EventManage = () => {
     },[])
   return (
     <div>
-        <p>Ticket Contract: {params.address}</p>
+        <p>Ticket Contract: {params.address.slice(0, 6)}...{params.address.slice(-6)}</p>
+        <p>setNewMaxSupply</p>
+        <p>rescheduleShow</p>
+        <p>refund</p>
+        <p>completeShow</p>
     </div>
   )
 }

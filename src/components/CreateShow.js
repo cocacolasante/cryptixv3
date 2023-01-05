@@ -239,7 +239,7 @@ const CreateShow = () => {
                 <label >Show Date</label>
                 <input type="datetime-local" onChange={e=>setShowDate(e.target.value)} name="show date" required />
                 <br />
-                <label >Ticket Price</label>
+                <label >Ticket Price in Matic</label>
                 <input onChange={e=>setShowPrice(e.target.value)} name="ticket price" required />
                 <br />
                 <label >Set Max Supply of Tickets </label>

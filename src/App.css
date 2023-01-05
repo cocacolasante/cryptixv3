@@ -7,7 +7,7 @@
   box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.75);
 -webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.75);
 -moz-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.75);
-  
+
 
 }
 .connect-div{
@@ -97,6 +97,27 @@
   line-height: 3px;
   background-color: whitesmoke;
 }
+.event-card{
+  max-width: 30%;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-bottom: 4px;
+  display: inline-flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  line-height: 10px;
+  background-color: whitesmoke;
+  text-align: center;
+}
+.event-manage-div{
+  text-align: center;
+}
+.event-img{
+  margin: auto;
+  padding-bottom: 25px;
+}
+
 
 .home-container{
   padding-top: 50px;

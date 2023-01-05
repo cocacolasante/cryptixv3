@@ -75,6 +75,7 @@ contract ControlShow{
         require(msg.sender == band || msg.sender == venue , "only band or venue");
         ICryptickets(ticketContract).setBaseUri(_baseUri);
     }
+    
 
 
   

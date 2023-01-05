@@ -6,10 +6,6 @@ import EventManage from "../components/EventManage"
 const ManageShows = () => {
   return (
     <div className='home-container'>
-      <h2>Manage Your Tickets</h2>
-        <MyTickets />
-        <div className="spacing-div"></div>
-      <h2>Manage Your Shows</h2>
       <Routes>
             <Route index element={<MyEvents />} />
                 <Route path="/:address" element={<EventManage />} />

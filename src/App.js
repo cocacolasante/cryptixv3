@@ -6,6 +6,7 @@ import Home from './routes/Home';
 import Browse from './routes/Browse';
 import ManageShows from './routes/ManageShows';
 import Profile from './routes/Profile';
+import ManageTix from './routes/ManageTix';
 
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
       <Route path='/' element={ <Navbar />} >
         <Route index element={ <Home />} />
         <Route path='/browse/*' element={<Browse />} />
+        <Route path='/managetix' element={<ManageTix />} />
         <Route path='/manage/*' element={<ManageShows />} />
         <Route path='/createshow' element={<CreatePage />} />
         <Route path='/profile' element={<Profile />} />

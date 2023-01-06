@@ -1,5 +1,4 @@
 import MyEvents from "../components/MyEvents"
-import MyTickets from "../components/MyTickets"
 import { Routes, Route } from 'react-router-dom'
 import EventManage from "../components/EventManage"
 

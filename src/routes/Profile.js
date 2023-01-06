@@ -1,8 +1,12 @@
 import React from 'react'
+import CurrentUser from '../components/CurrentUser'
 
 const Profile = () => {
   return (
-    <div>Profile</div>
+    <div>
+      {/* <CurrentUser /> */}
+      <h2>Coming Soon</h2>
+    </div>
   )
 }
 

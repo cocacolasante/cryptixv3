@@ -213,8 +213,8 @@ const displayEventCard = () =>{
               {/* <h4>Date: {displayShowDate(i["showTime"])}</h4> */}
               {displayShowDate(i['showTime'])}
 
-              <button value={i} onClick={e=>buyTickets(e.target.value, i["ticketAddress"], i["ShowName"], i["bandAddress"], i["venueAddress"])} >Buy Ticket</button>
-              <button value={i} onClick={e=>addToMyTickets(e, i["ticketAddress"])}>Add to MyTix</button>
+              <button className='buy-button' value={i} onClick={e=>buyTickets(e.target.value, i["ticketAddress"], i["ShowName"], i["bandAddress"], i["venueAddress"])} >Buy Ticket</button>
+              <button className='buy-button' value={i} onClick={e=>addToMyTickets(e, i["ticketAddress"])}>Add to MyTix</button>
           </div>
       )
   })

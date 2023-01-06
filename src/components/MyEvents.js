@@ -154,7 +154,7 @@ const MyEvents = () => {
 
         {displayShowDate(i['showTime'])}
         
-        <Link to={`/manage/${i["controllerContract"]}`} >Manage Event</Link>
+        <Link className='event-btm' to={`/manage/${i["controllerContract"]}`} >Manage Event</Link>
 
     </div>
       )

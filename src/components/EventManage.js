@@ -209,13 +209,13 @@ const EventManage = () => {
         <p>Ticket Contract: {params.address.slice(0, 6)}...{params.address.slice(-6)}</p>
         <img className='thumbnail event-img' src={imageUri} alt="nft" />
         <input onChange={e=>setNewMax(e.target.value)} type="number" placeholder='Enter New Max tix' />
-        <button onClick={setNewMaxSupply} >Set Max Tix</button>
+        <button className='buy-button' onClick={setNewMaxSupply} >Set Max Tix</button>
         <br />
         <input type="datetime-local" onChange={e=>setNewEventDate(e.target.value)} />
-        <button >Change Event Date</button>
+        <button className='buy-button' >Change Event Date</button>
         <br />
-        <button onClick={cancelShow} >Cancel Show</button>
-        <button onClick={completeShow} >Complete Show</button>
+        <button className='buy-button' onClick={completeShow} >Complete Show</button>
+        <button className='cancel-button' onClick={cancelShow} >Cancel Show</button>
     </div>
     </div>
   )

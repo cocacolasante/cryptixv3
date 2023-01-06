@@ -237,7 +237,7 @@ const MyTickets = () => {
 
               {displayShowDate(i['showTime'])}
 
-              <button value={i} onClick={e=>buyTickets(e.target.value, i["ticketAddress"], i["ShowName"], i["bandAddress"], i["venueAddress"])} >Buy Ticket</button>
+              <button className='buy-button' value={i} onClick={e=>buyTickets(e.target.value, i["ticketAddress"], i["ShowName"], i["bandAddress"], i["venueAddress"])} >Buy Ticket</button>
           </div>
         )
       })}

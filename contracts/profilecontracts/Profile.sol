@@ -42,6 +42,10 @@ contract Profile {
         
     }
 
+    function setUsername(string memory newUsername) public {
+        users[msg.sender].username = newUsername;
+    }
+
     function setPurchasedShow(address newShow) public {
         purchasedShows[msg.sender].push(newShow);
 

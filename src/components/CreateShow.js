@@ -245,11 +245,11 @@ const CreateShow = () => {
                 <label >Set Max Supply of Tickets </label>
                 <input onChange={e=>setMaxSupply(e.target.value)} name="max supply" required />
                 <br />
-                <button onClick={e=>createNewShow(e)} >Create New Show</button>
+                <button className='buy-button' onClick={e=>createNewShow(e)} >Create New Show</button>
                 <br />
 
                 <label >Ticket Picture Upload</label>
-                <input type="file" onChange={uploadToIPFS} placeholder="upload ticket photo" />
+                <input className='buy-button' type="file" onChange={uploadToIPFS} placeholder="upload ticket photo" />
 
             </form>
         </div>

@@ -17,6 +17,7 @@ const Home = () => {
       <AboutUs />
       <div className="spacing-div"></div>
       <ContactUs />
+      <div className="spacing-div"></div>
     </div>
   )
 }

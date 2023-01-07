@@ -13,33 +13,24 @@ const CurrentUser = () => {
     const [userStruct, setUserStruct] = useState()
 
 
-    const setUsernameAndMessage = async () =>{
+    const createProfile = async () =>{
         try{
-            const provider = new ethers.provider.Web3Provider(window.ethereum)
+            const provider = new ethers.providers.Web3Provider(window.ethereum)
             const signer = provider.getSigner()
 
             const ProfileContract = new ethers.Contract(PROFILECONTRACTADDRESS, profileAbi.abi, signer)
 
             let txn, res 
 
-            txn = await ProfileContract.setUsername(userName)
+            txn = await ProfileContract.createProfile(userName, status)
             res = await txn.wait()
 
             if(res.status === 1){
-                alert("Username set")
+                alert("Profile created")
             }else{
                 console.log("failed")
             }
 
-
-            txn = await ProfileContract.setMessage(status)
-            res = await txn.wait()
-
-            if(res.status === 1){
-                alert("Status set")
-            }else{
-                console.log("failed")
-            }
 
         }catch(error){
             console.log(error)
@@ -69,13 +60,15 @@ const CurrentUser = () => {
                     <p>Please Create Account</p>
                     <input type="text" onChange={e=>setUsername(e.target.value)} placeholder='enter user name' require />
                     <input type="text" onChange={e=>setStatus(e.target.value)} placeholder='status message' require />
-                    <button onClick={setUsernameAndMessage} className='buy-button' >Set Username Message</button>
+                    <button onClick={createProfile} className='buy-button' >Create Profile</button>
                 </div>
             )
         } else{
             return (
                 <div>
-                    <p>{userStruct}</p>
+                    <p>Username: {userStruct["username"]}</p>
+                    <p>Current Status: {userStruct["statusMessage"]}</p>
+                    
                 </div>
             )
         }

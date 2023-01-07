@@ -21,10 +21,10 @@ contract Profile {
         string username;
     }
 
-    function createProfile(string memory username) public {
+    function createProfile(string memory username, string memory status) public {
         require(users[msg.sender].user == address(0), "already created profile");
 
-        users[msg.sender] = UserProfile(msg.sender, address(0), 0, "default status", username);
+        users[msg.sender] = UserProfile(msg.sender, address(0), 0, status, username);
 
     }
 
@@ -45,6 +45,7 @@ contract Profile {
     function setUsername(string memory newUsername) public {
         users[msg.sender].username = newUsername;
     }
+
 
     function setPurchasedShow(address newShow) public {
         purchasedShows[msg.sender].push(newShow);

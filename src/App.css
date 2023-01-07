@@ -329,4 +329,9 @@ input{
   border-radius: 10px;
 }
 
+.social-links{
+  display: flex;
+  justify-content: space-evenly;
+}
+
         

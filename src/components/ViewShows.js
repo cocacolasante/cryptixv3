@@ -9,6 +9,7 @@ import createContractAbi from "../abiAssets/createContractAbi.json"
 import ticketAbi from "../abiAssets/ticketAbi.json"
 import PROFILECONTRACTADDRESS from '../addresses/ProfileContract';
 import profileContractAbi from "../abiAssets/profileContractAbi.json"
+import { Link } from 'react-router-dom';
 
 
 const toWeiStr = (num) => ethers.utils.parseEther(num.toString())
@@ -222,6 +223,8 @@ const ViewShows = () => {
 
                     <button className='buy-button' value={i} onClick={e=>buyTickets(e.target.value, i["ticketAddress"], i["ShowName"], i["bandAddress"], i["venueAddress"])} >Buy Ticket</button>
                     <button className='buy-button' value={i} onClick={e=>addToMyTickets(e, i["ticketAddress"])}>Add to MyTix</button>
+                    <Link className='event-btm' to={`/browse/${i["ticketAddress"]}`} >View Details</Link>
+
                 </div>
             )
         })) }

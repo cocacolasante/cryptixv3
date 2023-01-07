@@ -18,9 +18,9 @@ contract Cryptickets is ERC721URIStorage{
     uint public maxSupply = 100;
 
     address public admin;
-    address private immutable bandAddress;
-    address private immutable venueAddress;
-    address private immutable escrowAddress;
+    address public immutable bandAddress;
+    address public immutable venueAddress;
+    address public immutable escrowAddress;
 
     uint public bandPercent = 10;
 

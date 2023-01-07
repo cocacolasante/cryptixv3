@@ -5,10 +5,10 @@ import EventManage from "../components/EventManage"
 const ManageShows = () => {
   return (
     <div className='home-container'>
-      <Routes>
+          <Routes>
             <Route index element={<MyEvents />} />
                 <Route path="/:address" element={<EventManage />} />
-            </Routes>
+          </Routes>
         <div className="spacing-div"></div>
     </div>
   )

@@ -12,6 +12,20 @@ const ShowManage = () => {
     const [imageUri, setImageUri ] = useState()
     const[activeAccount, setActiveAccount] = useState()
 
+    const [band, setBand] = useState()
+    const [ venue, setVenue] = useState()
+    const [tixPrice, setTixPrice] = useState()
+    const [walletMax, setWalletMax] = useState()
+    const [showDate, setShowDate] = useState()
+    const [ showCompleted, setShowCompleted] = useState()
+    const [showCancelled, setShowCancelled] = useState()
+    const[showName, setShowName] = useState()
+
+
+    const [purchaseAmount, setPurchaseAmount] = useState()
+
+
+
 
 
 
@@ -30,6 +44,8 @@ const ShowManage = () => {
                 setActiveAccount(accounts[0]);
                 console.log(`connected to ${accounts[0]}`)
                 await _getTicketNFTImage()
+                await _getShowInfo()
+
     
     
             }
@@ -65,31 +81,72 @@ const ShowManage = () => {
             const TicketContract = new ethers.Contract(params.address, ticketAbi.abi, provider)
 
             const bandAddress = await TicketContract.bandAddress()
-            const venue = await TicketContract.venueAddress()
-            
+            setBand(bandAddress)
+
+            const venueAddress = await TicketContract.venueAddress()
+            setVenue(venueAddress)
+
+            let ticketPrice = await TicketContract.ticketPrice()
+            ticketPrice = ticketPrice.toString()
+            setTixPrice(ticketPrice)
+
+            const maxPerWallet = await TicketContract.ticketLimit()
+            setWalletMax(maxPerWallet)
+
+            let endDateInSecs = await TicketContract.endDate()
+            endDateInSecs = endDateInSecs.toString()
+            setShowDate(endDateInSecs)
+
+            const showComplete = await TicketContract.showCompleted()
+            setShowCompleted(showComplete)
+
+            const showCancel = await TicketContract.showCancelled()
+            setShowCancelled(showCancel)
+
+            const _showName = await TicketContract.name()
+            setShowName(_showName)
+
+            console.log(showCancel)
+
 
         }catch(error){
             console.log(error)
         }
     }
+
+    const displayShow = () =>{
+        return(
+            <div>
+                <h2>Show Name: {showName} </h2>
+                <img src={imageUri} alt="nft" className='lrg-thumbnail' />
+                <h2>Band/Guest: {band} </h2>
+                <h2>Host: {venue} </h2>
+                <p>Show Date: {showDate} </p>
+                <p>Price: {tixPrice} </p>
+                {showCompleted ?<p>Status: Completed</p> : <p>Still Running</p> }
+                {showCancelled ?<p>Status: Cancelled</p> : <p></p> }
+                <input onChange={e=>setPurchaseAmount(e.target.value)} type="number" placeholder='amount of tickets' />
+                <button className='buy-button'>Purchase ticket</button>
+        </div>
+
+        )
+    }
     
     
     useEffect(()=>{
-    checkIfWalletIsConnected()
+        checkIfWalletIsConnected()
 
 
     },[])
   
   return (
     <div>
-        <h2>Show Name: </h2>
-        <img src={imageUri} alt="nft" className='lrg-thumbnail' />
-        <h2>Band/Guest: </h2>
-        <p>Show Date</p>
-        <p>Price</p>
-        <button>Purchase ticket</button>
+        {!band ? <p>loading</p> : displayShow() }
     </div>
-  )
+
+    )
+
+
 }
 
 export default ShowManage

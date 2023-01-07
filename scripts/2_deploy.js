@@ -23,12 +23,6 @@ async function main() {
 
   console.log(`Creator Contract Deployed to ${CreatorContract.address}`)
 
-  const profileContractFactory = await hre.ethers.getContractFactory("Profile")
-  const ProfileContract = await profileContractFactory.deploy()
-  await ProfileContract.deployed()
-
-  console.log(`Profile Contract Deployed to ${ProfileContract.address}`)
-
 
 }
 

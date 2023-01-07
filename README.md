@@ -14,3 +14,4 @@ Browse shows
     
 
 
+REDEPLOY ALL CONTRACTS 

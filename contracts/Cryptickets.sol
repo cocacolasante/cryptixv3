@@ -32,8 +32,6 @@ contract Cryptickets is ERC721URIStorage{
     bool public showCompleted;
     bool public rescheduled;
 
-    address public ProfileContract = 0x928387a178Cbc40b3bcc188f30540835Aaef7db9;
-
     address[] public allOwners;
 
 

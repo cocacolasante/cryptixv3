@@ -122,7 +122,7 @@ const CreateShow = () => {
     
                 const CreateShowContract = new ethers.Contract(CREATE_SHOW_ADDRESS, createContractAbi.abi, signer )
     
-                const tx = await CreateShowContract.createShow(showName, showSymbol, bandAddress, venueAddress, secondsToShow, convertedShowPrice)
+                const tx = await CreateShowContract.createShow(showName, showSymbol, bandAddress, secondsToShow, convertedShowPrice)
                 
 
                 const receipt = await tx.wait()
@@ -232,9 +232,6 @@ const CreateShow = () => {
                 <br />
                 <label >Band/Speaker Address</label>
                 <input onChange={e=>setBandAddress(e.target.value)} name="band address" required />
-                <br />
-                <label >Venue Address</label>
-                <input onChange={e=>setVenueAddress(e.target.value)} name="venue address" required/>
                 <br />
                 <label >Show Date</label>
                 <input type="datetime-local" onChange={e=>setShowDate(e.target.value)} name="show date" required />

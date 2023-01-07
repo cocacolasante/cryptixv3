@@ -40,24 +40,24 @@ contract CreatorContract{
         createTickAdd =_createTickAdd;
     }
 
-    function createShow(string memory _name, string memory _symbol, address _bandAddress, address _venueAddress, uint endDate, uint price) public{
+    function createShow(string memory _name, string memory _symbol, address _bandAddress, uint endDate, uint price) public{
         showNumber++;
         
         uint endTime = endDate + block.timestamp;
 
         Escrow newEscrow = new Escrow();
 
-        address newTickets = ICreateTickets(createTickAdd).createTicket(_name, _symbol, address(newEscrow), _bandAddress, _venueAddress, endTime, price);
+        address newTickets = ICreateTickets(createTickAdd).createTicket(_name, _symbol, address(newEscrow), _bandAddress, msg.sender, endTime, price);
         
-        address newController = ICreateController(createContAdd).createController(showNumber, _bandAddress, _venueAddress, address(newTickets));
+        address newController = ICreateController(createContAdd).createController(showNumber, _bandAddress, msg.sender, address(newTickets));
 
         ICryptickets(newTickets).changeAdmin(newController);
 
         newEscrow.setTicketContract(address(newTickets));
 
-        allShows[showNumber] = Show(_name, address(newTickets), address(newEscrow),newController, _bandAddress, _venueAddress, endTime, price, false);
+        allShows[showNumber] = Show(_name, address(newTickets), address(newEscrow),newController, _bandAddress, msg.sender, endTime, price, false);
         
-        showAddress[address(newTickets)] = Show(_name, address(newTickets), address(newEscrow),newController, _bandAddress, _venueAddress, endTime, price, false);
+        showAddress[address(newTickets)] = Show(_name, address(newTickets), address(newEscrow),newController, _bandAddress, msg.sender, endTime, price, false);
         
 
     }

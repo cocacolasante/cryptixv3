@@ -339,4 +339,10 @@ input{
   justify-content: space-evenly;
 }
 
+.view-lrg-show-card{
+  background-color: whitesmoke;
+  text-align: center;
+  line-height: 12px;
+}
+
         

@@ -56,16 +56,16 @@ const CurrentUser = () => {
     const checkForUserProfile = () =>{
         if(userStruct["user"] === nullAddress){
             return(
-                <div>
+                <div className='create-show-div border-radius-outline'>
                     <p>Please Create Account</p>
-                    <input type="text" onChange={e=>setUsername(e.target.value)} placeholder='enter user name' require />
-                    <input type="text" onChange={e=>setStatus(e.target.value)} placeholder='status message' require />
+                    <input type="text" onChange={e=>setUsername(e.target.value)} placeholder='enter user name' required />
+                    <input type="text" onChange={e=>setStatus(e.target.value)} placeholder='status message' required />
                     <button onClick={createProfile} className='buy-button' >Create Profile</button>
                 </div>
             )
         } else{
             return (
-                <div>
+                <div className='home-container'>
                     <p>Username: {userStruct["username"]}</p>
                     <p>Current Status: {userStruct["statusMessage"]}</p>
                     
@@ -106,7 +106,7 @@ const CurrentUser = () => {
     },[])
 
   return (
-    <div>
+    <div className='home-container'>
         <h2>Current User</h2>
         {/* create if statement for uesr address === null address to prompt a create user profile */}
         {!userStruct ? <p>Please connect wallet</p> : checkForUserProfile() }

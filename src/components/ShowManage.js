@@ -3,7 +3,25 @@ import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import {ethers} from "ethers"
 import ticketAbi from "../abiAssets/ticketAbi.json"
-import controllerAbi from "../abiAssets/controllerAbi.json"
+import env from "react-dotenv";
+import { Buffer } from "buffer";
+import { create as ipfsClient} from "ipfs-http-client"
+import PROFILECONTRACTADDRESS from '../addresses/ProfileContract';
+import profileContractAbi from "../abiAssets/profileContractAbi.json"
+
+const nullAddress = "0x0000000000000000000000000000000000000000"
+
+const auth =
+  'Basic ' + Buffer.from(env.PROJECT_ID + ':' + env.PROJECT_CODE).toString('base64');
+
+const client = ipfsClient({
+    host: 'ipfs.infura.io',
+    port: 5001,
+    protocol: 'https',
+    headers: {
+        authorization: auth,
+        },
+    });
 
 
 const ShowManage = () => {
@@ -21,12 +39,61 @@ const ShowManage = () => {
     const [showCancelled, setShowCancelled] = useState()
     const[showName, setShowName] = useState()
 
-
-    const [purchaseAmount, setPurchaseAmount] = useState()
-
-
+    const[tixSold, setTixSold] = useState()
+    const [maxAvail, setMaxAvail] = useState()
 
 
+
+    const buyTickets = async () =>{
+        try{
+            const {ethereum} = window;
+            const provider = new ethers.providers.Web3Provider(ethereum)
+            const signer = provider.getSigner()
+
+            const TicketContract = new ethers.Contract(params.address, ticketAbi.abi, signer)
+
+            let baseURI = await TicketContract.baseUri()
+            let ticketNumber = await TicketContract._tokenIds()
+            let ticketPrice = await TicketContract.ticketPrice()
+            ticketPrice= ticketPrice.toString()
+
+            console.log(baseURI)
+            console.log(ticketPrice)
+            let result = await client.add(JSON.stringify({ShowName: showName, Band: band, Venue: venue, TicketNumber: ticketNumber.toString(), image: baseURI  }))
+
+            console.log(`https://cryptix.infura-ipfs.io/ipfs/${result.path}`)
+
+
+            let txn = await TicketContract.purchaseTickets(1, `https://cryptix.infura-ipfs.io/ipfs/${result.path}`, {value: ticketPrice})
+            let res = await txn.wait()
+
+
+            
+            if(res.status === 1){
+                console.log("Success")
+                
+            }else{
+                console.log("Failed")
+            }
+
+            const ProfileContract = new ethers.Contract(PROFILECONTRACTADDRESS, profileContractAbi.abi, signer)
+
+    
+            txn = await ProfileContract.setPurchasedShow(params.address)
+            res = await txn.wait()
+        
+            if(res.status === 1 ){
+                alert("Successfully Added")
+            } else{
+                alert("failed")
+            }
+    
+            
+
+        }catch(err){
+            console.log(err)
+        }
+    }
 
 
     const checkIfWalletIsConnected = async () =>{
@@ -76,8 +143,8 @@ const ShowManage = () => {
 
     const _getShowInfo = async () =>{
         try{
+            // get ticket information
             const provider = new ethers.providers.Web3Provider(window.ethereum)
-            
             const TicketContract = new ethers.Contract(params.address, ticketAbi.abi, provider)
 
             const bandAddress = await TicketContract.bandAddress()
@@ -106,27 +173,70 @@ const ShowManage = () => {
             const _showName = await TicketContract.name()
             setShowName(_showName)
 
-            console.log(showCancel)
+            let ticketNumber = await TicketContract._tokenIds()
+            ticketNumber = ticketNumber.toString()
+            setTixSold(ticketNumber)
+
+            let maxSup = await TicketContract.maxSupply()
+            maxSup = maxSup.toString()
+            setMaxAvail(maxSup)
+
+            // get profile information
+            const ProfileContract = new ethers.Contract(PROFILECONTRACTADDRESS, profileContractAbi.abi, provider)
+
+            const hostUserStruct = await ProfileContract.users(venueAddress)
+
+            if(hostUserStruct["user"] !== nullAddress){
+                const hostUsername = hostUserStruct["username"]
+                setVenue(hostUsername)
+            }
+
+            const bandStruct = await ProfileContract.users(bandAddress)
+            if(bandStruct["user"] !== nullAddress){
+                const bandUsername = bandStruct["username"]
+                setBand(bandUsername)
+            }
+
+            console.log(bandStruct)
+
+
+            
 
 
         }catch(error){
             console.log(error)
         }
     }
+    
+    const displayShowStatus = () =>{
+        if(showCompleted){
+            return(
+                <p>Status: Completed</p>
+            )
+        }else if(showCancelled){
+            return(
+                <p>Status: Cancelled</p>
+            )
+        }else{
+            return(
+                <p>Status: Still Running</p>
+            )
+        }
+    }
 
     const displayShow = () =>{
         return(
-            <div>
+            <div className='border-radius-outline view-lrg-show-card'>
                 <h2>Show Name: {showName} </h2>
                 <img src={imageUri} alt="nft" className='lrg-thumbnail' />
                 <h2>Band/Guest: {band} </h2>
                 <h2>Host: {venue} </h2>
                 <p>Show Date: {showDate} </p>
                 <p>Price: {tixPrice} </p>
-                {showCompleted ?<p>Status: Completed</p> : <p>Still Running</p> }
-                {showCancelled ?<p>Status: Cancelled</p> : <p></p> }
-                <input onChange={e=>setPurchaseAmount(e.target.value)} type="number" placeholder='amount of tickets' />
-                <button className='buy-button'>Purchase ticket</button>
+                <p>Number of Tickets Sold: {tixSold} </p>
+                <p>Total Amount of Tickets Available: {maxAvail} </p>
+                {displayShowStatus()}
+                <button onClick={buyTickets} className='buy-button'>Purchase ticket</button>
         </div>
 
         )
@@ -140,7 +250,7 @@ const ShowManage = () => {
     },[])
   
   return (
-    <div>
+    <div className='home-container'>
         {!band ? <p>loading</p> : displayShow() }
     </div>
 

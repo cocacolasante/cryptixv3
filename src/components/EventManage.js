@@ -13,10 +13,8 @@ const fromWei = (num) => ethers.utils.formatEther(num)
 const EventManage = () => {
     const params = useParams()
 
-    const [event, setEvent ] = useState(params.address)
     const [newMax, setNewMax ] = useState()
     const [newEventDate, setNewEventDate] = useState()
-    const [ tixContract, setTixContract] = useState()
     const [imageUri, setImageUri ] = useState()
 
     const[activeAccount, setActiveAccount] = useState()
@@ -214,7 +212,7 @@ const EventManage = () => {
         <input placeholder='Input New Ticket Price' type='number' />
         <button className='buy-button' >Sey New Ticket Price</button>
         <br />
-        <button>Create Check in Contract</button>
+        <button className='buy-button'>Create Check in Contract</button>
         <br />
         <button className='buy-button' onClick={completeShow} >Complete Show</button>
         <button className='cancel-button' onClick={cancelShow} >Cancel Show</button>

@@ -86,6 +86,7 @@
 .border-radius-outline{
   border: 1px solid #E6EEF7;
   box-shadow: 1px 1px 6px 3px #E6EEF7;
+  border-radius: 10px;
 }
 
 .show-card{
@@ -116,7 +117,9 @@
 }
 .event-manage-div{
   text-align: center;
+
 }
+
 .event-img{
   margin: auto;
   padding-bottom: 25px;
@@ -343,6 +346,8 @@ input{
   background-color: whitesmoke;
   text-align: center;
   line-height: 12px;
+  margin: auto;
+  width: 85%;
 }
 
         

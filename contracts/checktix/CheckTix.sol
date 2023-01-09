@@ -2,15 +2,16 @@
 pragma solidity ^0.8.9;
 
 import "../interfaces/ICryptickets.sol";
+import "@openzeppelin/contracts/interfaces/IERC721.sol";
 
 contract CheckTix{
     address public validator;
-    address public show;
+    address public ticketContract;
 
     mapping(uint => bool) public checkedIn;
 
     constructor(address _showAdd){
-        show = _showAdd;
+        ticketContract = _showAdd;
         validator = msg.sender;
     }
 
@@ -31,13 +32,27 @@ contract CheckTix{
 
     function viewListChecked() public view returns(uint[] memory){
         uint[] memory tixRedemed;
-        uint maxSup = ICryptickets(show).maxSupply();
+        uint maxSup = ICryptickets(ticketContract).maxSupply();
         for(uint i; i< maxSup; i++){
             if(checkedIn[i]==true){
                 tixRedemed[i] = i;
             }
         }
         return tixRedemed;
+    }
+
+    function selfCheckIn(uint nftNum) public returns(bool){
+        require(IERC721(ticketContract).ownerOf(nftNum) == msg.sender, "not token owner" );
+
+        checkedIn[nftNum] = true;
+
+        return true;
+    }
+
+    function changeValidator(address newValidator) public {
+        require(msg.sender == validator, "only validator");
+
+        validator = newValidator;
     }
 
     

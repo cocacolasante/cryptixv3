@@ -2,6 +2,7 @@
 pragma solidity ^0.8.9;
 
 interface ICryptickets{
+
     function purchaseTickets(uint amount) external payable;
     function returnAllOwners() external view returns(address[] memory);
 
@@ -20,4 +21,8 @@ interface ICryptickets{
     function changeShowDate(uint _newShowDate) external;
     function setBaseUri(string memory _bseuri)external;
     function maxSupply() external view returns(uint);
+
+
+    function returnVenueAddress() external view returns(address);
+    
 }

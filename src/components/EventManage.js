@@ -130,9 +130,6 @@ const EventManage = () => {
         
     }
 
-    const displayTixArt = () =>{
-
-    }
     
   
     const checkIfWalletIsConnected = async () =>{
@@ -213,6 +210,11 @@ const EventManage = () => {
         <br />
         <input type="datetime-local" onChange={e=>setNewEventDate(e.target.value)} />
         <button className='buy-button' >Change Event Date</button>
+        <br />
+        <input placeholder='Input New Ticket Price' type='number' />
+        <button className='buy-button' >Sey New Ticket Price</button>
+        <br />
+        <button>Create Check in Contract</button>
         <br />
         <button className='buy-button' onClick={completeShow} >Complete Show</button>
         <button className='cancel-button' onClick={cancelShow} >Cancel Show</button>

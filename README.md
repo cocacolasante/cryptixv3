@@ -1,17 +1,10 @@
 TO DO:
 
-manage show section
-    -complete show
-    -refund show
-    -rescheduleShow
-    -completeShow
-    -setNewMaxSupply
 
-Profile tab
-
-Browse shows
-    -individual show pages for users to link to
+TEST CHECK IN AND MANAGE CHECK IN CONTRACTS
+    -LINK CONTRACTS TO MANGE EVENTS PAGE
+    -CREATE NEW ROUTES FOR TICKETS CHECK IN
     
 
 
-REDEPLOY ALL CONTRACTS 
+deploy check tix and manage check tix contract

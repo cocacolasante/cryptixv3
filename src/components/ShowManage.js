@@ -23,6 +23,9 @@ const client = ipfsClient({
         },
     });
 
+const toWeiStr = (num) => ethers.utils.parseEther(num.toString())
+const toWeiInt = (num) => ethers.utils.parseEther(num) 
+const fromWei = (num) => ethers.utils.formatEther(num)
 
 const ShowManage = () => {
     let params = useParams();
@@ -258,7 +261,7 @@ const ShowManage = () => {
                 <h2>Band/Guest: {band} </h2>
                 <h2>Host: {venue} </h2>
                 <p>Show Date: {displayShowDate(showDate)} </p>
-                <p>Price: {tixPrice} </p>
+                <p>Price: {fromWei(tixPrice)} Matic</p>
                 <p>Number of Tickets Sold: {tixSold} </p>
                 <p>Total Amount of Tickets Available: {maxAvail} </p>
                 {displayShowStatus()}

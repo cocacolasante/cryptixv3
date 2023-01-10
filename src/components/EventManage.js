@@ -241,7 +241,7 @@ const EventManage = () => {
         }
     }
 
-    const displayCreateIn = () =>{
+    const displayCreateCheckIn = () =>{
         if(checkInContract === nullAddress ){
             return(
                 <>
@@ -251,7 +251,7 @@ const EventManage = () => {
         }else{
             return(
                 <>
-                    <Link className='buy-button' to={`/manage/${checkInContract}`} >Check In Contract</Link>
+                    <Link className='buy-button' to={`/manage/checkin/${checkInContract}`} >Check In Contract</Link>
                 </>
 
             )
@@ -289,7 +289,7 @@ const EventManage = () => {
         <input placeholder='Input New Ticket Price' type='number' />
         <button className='buy-button' >Set New Ticket Price</button>
         <br />
-        {displayCreateIn()}
+        {displayCreateCheckIn()}
         <br />
         <button className='buy-button' onClick={completeShow} >Complete Show</button>
         <button className='cancel-button' onClick={cancelShow} >Cancel Show</button>

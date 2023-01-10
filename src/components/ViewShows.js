@@ -216,7 +216,7 @@ const ViewShows = () => {
                     <p>Band: {i["bandAddress"].slice(0, 6)}...{i["bandAddress"].slice(-6)}</p>
                     <p>Venue: {i["venueAddress"].slice(0, 6)}...{i["venueAddress"].slice(-6)}</p>
                     <p>Tickets: {i["ticketAddress"].slice(0, 6)}...{i["ticketAddress"].slice(-6)}</p>
-                    <p>Price: {i["showPrice"]}</p>
+                    <p>Price: {i["showPrice"]} Matic</p>
 
                     {/* <h4>Date: {displayShowDate(i["showTime"])}</h4> */}
                     {displayShowDate(i['showTime'])}

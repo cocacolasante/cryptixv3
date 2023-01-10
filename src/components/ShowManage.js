@@ -8,7 +8,9 @@ import { Buffer } from "buffer";
 import { create as ipfsClient} from "ipfs-http-client"
 import PROFILECONTRACTADDRESS from '../addresses/ProfileContract';
 import profileContractAbi from "../abiAssets/profileContractAbi.json"
-
+import { FacebookShareButton, FacebookIcon } from 'react-share';
+import { TwitterShareButton, TwitterIcon } from 'react-share';
+import { LinkedinShareButton, LinkedinIcon } from 'react-share';
 
 const ShowManage = () => {
     const nullAddress = "0x0000000000000000000000000000000000000000"
@@ -268,6 +270,32 @@ const ShowManage = () => {
                 {displayShowStatus()}
 
                 <button onClick={buyTickets} className='buy-button'>Purchase ticket</button>
+                <br />
+
+                <button className='buy-button' >Share Event</button>
+                <div>
+                    <FacebookShareButton
+                        url={`https://plain-butterfly-8263.on.fleek.co/#/browse/${params.address}`}
+                        quote={'Check out this event! Buy Your NFT Ticket Today!'}
+                        hashtag="#muo"
+                    >
+                    <FacebookIcon size={32} round />
+                    </FacebookShareButton>
+                    <TwitterShareButton
+                        url={`https://plain-butterfly-8263.on.fleek.co/#/browse/${params.address}`}
+                        quote={'Dummy text!'}
+                        hashtag="#muo"
+                    >
+                        <TwitterIcon size={32} round />
+                    </TwitterShareButton>
+                    <LinkedinShareButton
+                        url={`https://plain-butterfly-8263.on.fleek.co/#/browse/${params.address}`}
+                        quote={'Dummy text!'}
+                        hashtag="#muo"
+                    >
+                        <LinkedinIcon size={32} round />
+                    </LinkedinShareButton>
+                </div>
         </div>
 
         )

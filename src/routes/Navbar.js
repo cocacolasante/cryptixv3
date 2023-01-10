@@ -87,7 +87,8 @@ const Navbar = () => {
             <ul className='router-links-bottom'>
                 <Link to="/" className='router-link-bottom'>Home</Link>
                 <Link to="/browse" className='router-link-bottom'>Browse Shows</Link>
-                <Link to="/manageshows" className='router-link-bottom'>Manage Tickets/Shows</Link>
+                <Link to="/managetix" className='router-link-bottom'>Manage Tickets</Link>
+                <Link to="/manage" className='router-link-bottom'>Manage Events</Link>
                 <Link to='/createshow' className='router-link-bottom'>Create Show</Link>
                 <Link to='/profile' className='router-link-bottom'>Profile</Link>
             </ul>

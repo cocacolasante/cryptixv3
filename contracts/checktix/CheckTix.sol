@@ -8,16 +8,26 @@ contract CheckTix{
     address public validator;
     address public ticketContract;
 
+    bool public checkInClosed;
+
+    modifier IsClosed {
+        require(checkInClosed == false, "no longer checking tickets");
+        _;
+    }
+
     mapping(uint => bool) public checkedIn;
+
+    receive() external payable{}
 
     constructor(address _showAdd){
         ticketContract = _showAdd;
         validator = msg.sender;
     }
 
-    function checkInNft(uint nftNumber) public returns(bool){
+    function checkInNft(uint nftNumber) public IsClosed returns(bool){
         require(msg.sender == validator, "validator");
         require(checkedIn[nftNumber] == false, "already checked in");
+        require(nftNumber <= ICryptickets(ticketContract).returnCurrentCount(), "ticket does not exist");
 
         checkedIn[nftNumber] = true;
 
@@ -30,24 +40,7 @@ contract CheckTix{
 
     }
 
-    function viewListChecked() public view returns(uint[] memory){
-        uint[] memory tixRedemed;
-        uint maxSup = ICryptickets(ticketContract).maxSupply();
-        for(uint i; i< maxSup; i++){
-            if(checkedIn[i]==true){
-                tixRedemed[i] = i;
-            }
-        }
-        return tixRedemed;
-    }
 
-    function selfCheckIn(uint nftNum) public returns(bool){
-        require(IERC721(ticketContract).ownerOf(nftNum) == msg.sender, "not token owner" );
-
-        checkedIn[nftNum] = true;
-
-        return true;
-    }
 
     function changeValidator(address newValidator) public {
         require(msg.sender == validator, "only validator");
@@ -55,6 +48,11 @@ contract CheckTix{
         validator = newValidator;
     }
 
+    function closeCheckIn() public {
+        require(msg.sender == validator, "only validator");
+        checkInClosed = true;
+
+    }
     
 
     

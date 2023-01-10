@@ -184,4 +184,12 @@ contract Cryptickets is ERC721URIStorage{
 
     }
 
+    function returnCurrentCount() public view returns(uint){
+        return( _tokenIds.current());
+    }
+
+    function returnVenueAddress() public view returns(address){
+        return venueAddress;
+    }
+
 }

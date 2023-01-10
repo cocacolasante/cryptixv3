@@ -16,7 +16,8 @@ contract ManageCheckTix {
         address ticketContract;
         address checkInContract;
     }
-
+    receive() external payable{}
+    
     function createCheckIn(address ticketAddress) public {
         require(msg.sender == ICryptickets(ticketAddress).returnVenueAddress(), "only creator can call" );
         require(tixToCheckIn[ticketAddress].checkInContract == address(0) , "already created");

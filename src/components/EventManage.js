@@ -210,7 +210,7 @@ const EventManage = () => {
         <button className='buy-button' >Change Event Date</button>
         <br />
         <input placeholder='Input New Ticket Price' type='number' />
-        <button className='buy-button' >Sey New Ticket Price</button>
+        <button className='buy-button' >Set New Ticket Price</button>
         <br />
         <button className='buy-button'>Create Check in Contract</button>
         <br />

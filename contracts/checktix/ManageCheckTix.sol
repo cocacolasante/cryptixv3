@@ -9,13 +9,15 @@ contract ManageCheckTix {
 
     // mapping of ticket address to check in struct
     mapping(address=>CheckIn) public tixToCheckIn;
-    //maps check in address to ticket address
+
+    //maps checkTix address to ticket address
     mapping(address=>address) public checkInToTix;
 
     struct CheckIn{
         address ticketContract;
         address checkInContract;
     }
+    
     receive() external payable{}
     
     function createCheckIn(address ticketAddress) public {

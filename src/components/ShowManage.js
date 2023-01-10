@@ -43,7 +43,33 @@ const ShowManage = () => {
     const [maxAvail, setMaxAvail] = useState()
 
 
-
+    const displayShowDate = (seconds) =>{
+        let newSeconds = parseInt(seconds)
+        const newDate = new Date(newSeconds * 1000)
+        
+        const hour = newDate.getHours()
+        const minutes = newDate.getMinutes()
+        const day = newDate.getDay()
+        const month = newDate.getMonth() + 1
+        const year = newDate.getFullYear()
+        
+        const formatTime = (hours) =>{
+            if(hours > 12){
+                return(
+                    <p>{hours - 12}:{minutes} PM {month}/{day}/{year}</p>
+                )
+            }else{
+                return(<p>{hours}:{minutes} AM {month}/{day}/{year}</p>)
+            }
+        }
+    
+        return(
+            <div>
+                <>{formatTime(hour)}</>
+            </div>
+        )
+    
+      }
     const buyTickets = async () =>{
         try{
             const {ethereum} = window;
@@ -231,11 +257,12 @@ const ShowManage = () => {
                 <img src={imageUri} alt="nft" className='lrg-thumbnail' />
                 <h2>Band/Guest: {band} </h2>
                 <h2>Host: {venue} </h2>
-                <p>Show Date: {showDate} </p>
+                <p>Show Date: {displayShowDate(showDate)} </p>
                 <p>Price: {tixPrice} </p>
                 <p>Number of Tickets Sold: {tixSold} </p>
                 <p>Total Amount of Tickets Available: {maxAvail} </p>
                 {displayShowStatus()}
+
                 <button onClick={buyTickets} className='buy-button'>Purchase ticket</button>
         </div>
 

@@ -9,25 +9,25 @@ import { create as ipfsClient} from "ipfs-http-client"
 import PROFILECONTRACTADDRESS from '../addresses/ProfileContract';
 import profileContractAbi from "../abiAssets/profileContractAbi.json"
 
-const nullAddress = "0x0000000000000000000000000000000000000000"
-
-const auth =
-  'Basic ' + Buffer.from(env.PROJECT_ID + ':' + env.PROJECT_CODE).toString('base64');
-
-const client = ipfsClient({
-    host: 'ipfs.infura.io',
-    port: 5001,
-    protocol: 'https',
-    headers: {
-        authorization: auth,
-        },
-    });
-
-const toWeiStr = (num) => ethers.utils.parseEther(num.toString())
-const toWeiInt = (num) => ethers.utils.parseEther(num) 
-const fromWei = (num) => ethers.utils.formatEther(num)
 
 const ShowManage = () => {
+    const nullAddress = "0x0000000000000000000000000000000000000000"
+    
+    const auth =
+      'Basic ' + Buffer.from(env.PROJECT_ID + ':' + env.PROJECT_CODE).toString('base64');
+    
+    const client = ipfsClient({
+        host: 'ipfs.infura.io',
+        port: 5001,
+        protocol: 'https',
+        headers: {
+            authorization: auth,
+            },
+        });
+    
+    const toWeiStr = (num) => ethers.utils.parseEther(num.toString())
+    const toWeiInt = (num) => ethers.utils.parseEther(num) 
+    const fromWei = (num) => ethers.utils.formatEther(num)
     let params = useParams();
 
     const [imageUri, setImageUri ] = useState()
@@ -184,6 +184,7 @@ const ShowManage = () => {
 
             let ticketPrice = await TicketContract.ticketPrice()
             ticketPrice = ticketPrice.toString()
+            ticketPrice = fromWei(ticketPrice)
             setTixPrice(ticketPrice)
 
             const maxPerWallet = await TicketContract.ticketLimit()
@@ -261,7 +262,7 @@ const ShowManage = () => {
                 <h2>Band/Guest: {band} </h2>
                 <h2>Host: {venue} </h2>
                 <p>Show Date: {displayShowDate(showDate)} </p>
-                <p>Price: {fromWei(tixPrice)} Matic</p>
+                <p>Price: {(tixPrice)} Matic</p>
                 <p>Number of Tickets Sold: {tixSold} </p>
                 <p>Total Amount of Tickets Available: {maxAvail} </p>
                 {displayShowStatus()}

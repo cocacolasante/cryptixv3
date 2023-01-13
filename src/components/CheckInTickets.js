@@ -27,6 +27,8 @@ const CheckInTickets = () => {
   const [ showCompleted, setShowCompleted] = useState()
   const [maxAvail, setMaxAvail] = useState()
 
+  const[redeemedTickets, setRedeemedTickets] = useState()
+
   const [imageUri, setImageUri ] = useState()
 
   const [ticketNumber, setTicketNumber] = useState()
@@ -96,7 +98,7 @@ const CheckInTickets = () => {
 
     return url
 
-}
+  }
 
   const getCheckInContract = async () =>{
     try {
@@ -147,7 +149,7 @@ const CheckInTickets = () => {
         const _showName = await TicketContract.name()
         setShowName(_showName)
 
-        let maxSup = await TicketContract.maxSupply()
+        let maxSup = await TicketContract._tokenIds()
         maxSup = maxSup.toString()
         setMaxAvail(maxSup)
 
@@ -197,17 +199,17 @@ const CheckInTickets = () => {
 
       const CheckInContract = new ethers.Contract(params.address, checkinAbi.abi, provider)
 
+      let output = []
       for(let i =0; i <= maxAvail; i++){
-        let output = []
-        let ticket = await CheckInContract.checkedIn(i);
+        const ticket = await CheckInContract.checkedIn(i);
         if(ticket === true){
-          output.push({
+          const tixToPush = {
             ticketNumber: i,
             checkedIn: true
-          })
-          console.log(output)
-          return output
+          }
+          output.push(tixToPush)
         }
+        setRedeemedTickets(output)
       }
        
 
@@ -227,6 +229,24 @@ const CheckInTickets = () => {
     )
   }
 
+  const displayRedeemed = () =>{
+    return(
+      <>
+        {redeemedTickets.map(i=>{
+          console.log(i["checkedIn"])
+            return(
+              <div  className='border-radius-outline checkedIn-list' key={i["ticketNumber"]}>
+                <h4 className='checkedin-header' >{i["ticketNumber"]}: {i["checkedIn"] && <p>Checked In</p>} </h4>
+              </div>
+            )
+          })}
+
+      </>
+    )
+
+    
+  }
+
 
   useEffect(()=>{
     checkIfWalletIsConnected()
@@ -235,9 +255,13 @@ const CheckInTickets = () => {
 
   useEffect(()=>{
     _getShowInfo()
-    returnCheckedInNFTs()
     
   },[ticketAddress])
+  
+  useEffect(()=>{
+    returnCheckedInNFTs()
+
+  },[maxAvail])
 
 
 
@@ -247,6 +271,7 @@ const CheckInTickets = () => {
       <h1>Check In Tickets</h1>
       {!ticketAddress ? <p>Loading...</p> : displayContractInfo()}
       {!ticketAddress ? <p>Loading...</p> : displayCheckInFunctions()}
+      {!redeemedTickets ? <p>Loading...</p> : displayRedeemed()}
 
     </div>
   )

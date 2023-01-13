@@ -349,5 +349,19 @@ input{
   margin: auto;
   width: 85%;
 }
+.checkedIn-list{
+  background-color: whitesmoke;
+  display: inline-flex;
+  flex-wrap: wrap;  
+  text-align: left;
+  line-height: 12px;
+  margin: auto;
+  width: 30%;
+}
+
+.checkedin-header{
+  display: inline;
+
+}
 
         

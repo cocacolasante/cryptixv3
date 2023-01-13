@@ -177,8 +177,9 @@ const EventManage = () => {
           }
           const accounts = await ethereum.request({method: "eth_accounts"})
           if(accounts.length !== 0 ){
-              setActiveAccount(accounts[0]);
-              console.log(`connected to ${accounts[0]}`)
+            const currentAct = accounts[0]
+              setActiveAccount(currentAct);
+              console.log(`connected to ${currentAct}`)
               
   
           }
@@ -233,6 +234,7 @@ const EventManage = () => {
 
             const checkInStruct = await ManageCheckInContract.tixToCheckIn(eventTixAddress)
             const currentCheckIn = checkInStruct["checkInContract"]
+            
             setCheckInContract(currentCheckIn)
             console.log(currentCheckIn)
 

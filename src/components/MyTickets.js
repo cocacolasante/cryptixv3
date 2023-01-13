@@ -136,17 +136,7 @@ const MyTickets = () => {
                 console.log("Failed")
             }
 
-            const ProfileContract = new ethers.Contract(PROFILECONTRACTADDRESS, profileContractAbi.abi, signer)
-
-    
-            txn = await ProfileContract.setPurchasedShow(ticketAddress)
-            res = await txn.wait()
-        
-            if(res.status ===1 ){
-              alert("Successfully Added")
-            } else{
-              alert("failed")
-            }
+          
     
         }catch(error){
             console.log(error)

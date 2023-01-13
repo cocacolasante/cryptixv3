@@ -39,9 +39,9 @@ const ShowManage = () => {
     const [ venue, setVenue] = useState()
     const [tixPrice, setTixPrice] = useState()
     const [walletMax, setWalletMax] = useState()
-    const [showDate, setShowDate] = useState()
     const [ showCompleted, setShowCompleted] = useState()
     const [showCancelled, setShowCancelled] = useState()
+    const [showDate, setShowDate] = useState()
     const[showName, setShowName] = useState()
 
     const[tixSold, setTixSold] = useState()

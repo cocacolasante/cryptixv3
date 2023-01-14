@@ -365,11 +365,11 @@ input{
 }
 
 .landing-container{
-  min-height: 350px;
+  min-height: 500px;
   min-width: 80%;
   max-width: 95%;
   margin: auto;
-  background-image: url("./imageAssets/yellowconcert.png");
+  background-image: url("./imageAssets/greenconcert.png");
   background-position: center;
 
   box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.75);
@@ -390,21 +390,17 @@ input{
   color: black;
   font-size: 5rem;
 
-  padding-top: 13px;
+  padding-top: 50px;
 
-  background: #A30010;
-  background: radial-gradient(circle farthest-corner at center center, #A30010 0%, #FF0000 75%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: whitesmoke;
   
 }
 
 .landing-text{
   font-size: 3rem;
-  background: #A30010;
-  background: radial-gradient(circle farthest-corner at center center, #A30010 0%, #FF0000 75%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: whitesmoke;
+  
+
 }
 
         

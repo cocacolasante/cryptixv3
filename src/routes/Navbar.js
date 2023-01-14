@@ -70,10 +70,10 @@ const Navbar = () => {
             <div className='' >
                 <ul className='router-links'>
                     <Link to="/" className='router-link'>Home</Link>
-                    <Link to="/browse" className='router-link'>Browse Shows</Link>
+                    <Link to="/browse" className='router-link'>Browse Events</Link>
                     <Link to="/managetix" className='router-link'>Manage Tickets</Link>
                     <Link to="/manage" className='router-link'>Manage Events</Link>
-                    <Link to='/createshow' className='router-link'>Create Show</Link>
+                    <Link to='/createshow' className='router-link'>Create Tickets</Link>
                     <Link to='/profile' className='router-link'>Profile</Link>
                 </ul>
             </div>
@@ -86,10 +86,10 @@ const Navbar = () => {
         <div className='footer-container'>
             <ul className='router-links-bottom'>
                 <Link to="/" className='router-link-bottom'>Home</Link>
-                <Link to="/browse" className='router-link-bottom'>Browse Shows</Link>
-                <Link to="/managetix" className='router-link-bottom'>Manage Tickets</Link>
+                <Link to="/browse" className='router-link-bottom'>Browse Events</Link>
+                <Link to="/managetix" className='router-link-bottom'>Manage Ticket</Link>
                 <Link to="/manage" className='router-link-bottom'>Manage Events</Link>
-                <Link to='/createshow' className='router-link-bottom'>Create Show</Link>
+                <Link to='/createshow' className='router-link-bottom'>Create Tickets</Link>
                 <Link to='/profile' className='router-link-bottom'>Profile</Link>
             </ul>
             <p className='footer-tm'>Created by Cocacolasante</p>

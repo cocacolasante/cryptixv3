@@ -60,6 +60,7 @@ const UpcomingEvents = () => {
                 image: await _getTicketNFTImage(show.ticketAddress)
             }
             output.push(returnedShow)
+            console.log(returnedShow)
 
 
 

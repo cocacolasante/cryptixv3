@@ -4,12 +4,17 @@ pragma solidity ^0.8.9;
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
+import "../interfaces/IProfile.sol";
+
 
 contract CreateProfileNFT is ERC721URIStorage {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
+    address public profileContract;
 
-    constructor() ERC721("Cryptix", "CTX"){}
+    constructor(address _profileContract) ERC721("Cryptix", "CTX"){
+        profileContract = _profileContract;
+    }
 
     function makeNFT(string memory _tokenUri) public returns(uint){
         _tokenIds.increment();
@@ -18,6 +23,8 @@ contract CreateProfileNFT is ERC721URIStorage {
 
         _mint(msg.sender, newTokenId);
         _setTokenURI(newTokenId, _tokenUri);
+
+        IProfile(profileContract).setProfileNFt(address(this), newTokenId);
 
         return newTokenId;
     }

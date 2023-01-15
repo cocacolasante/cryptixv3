@@ -2,6 +2,7 @@ import { ethers } from 'ethers';
 import { useState, useEffect } from 'react';
 import profileAbi from "../abiAssets/profileContractAbi.json"
 import PROFILECONTRACTADDRESS from '../addresses/ProfileContract';
+import MintProfileNFT from './MintProfileNFT';
 
 const nullAddress = "0x0000000000000000000000000000000000000000"
 
@@ -37,6 +38,53 @@ const CurrentUser = () => {
         }
     }
 
+    const updateUsername = async () =>{
+        try{
+            const provider = new ethers.providers.Web3Provider(window.ethereum)
+            const signer = provider.getSigner()
+
+            const ProfileContract = new ethers.Contract(PROFILECONTRACTADDRESS, profileAbi.abi, signer)
+
+            let txn, res 
+
+            txn = await ProfileContract.setUsername(userName)
+            res = await txn.wait()
+
+            if(res.status === 1){
+                alert("Profile created")
+            }else{
+                console.log("failed")
+            }
+
+
+        }catch(error){
+            console.log(error)
+        }
+    }
+    const updateStatus = async () =>{
+        try{
+            const provider = new ethers.providers.Web3Provider(window.ethereum)
+            const signer = provider.getSigner()
+
+            const ProfileContract = new ethers.Contract(PROFILECONTRACTADDRESS, profileAbi.abi, signer)
+
+            let txn, res 
+
+            txn = await ProfileContract.setMessage(status)
+            res = await txn.wait()
+
+            if(res.status === 1){
+                alert("Profile created")
+            }else{
+                console.log("failed")
+            }
+
+
+        }catch(error){
+            console.log(error)
+        }
+    }
+
     const returnUserProfile = async (account) =>{
         try{
             const provider = new ethers.providers.Web3Provider(window.ethereum)
@@ -50,6 +98,20 @@ const CurrentUser = () => {
 
         }catch(error){
             console.log(error)
+        }
+    }
+
+    const displayCurrentNFT = () =>{
+        if(userStruct["profileNFT"]=== nullAddress){
+            return(
+               <p>No Profile NFT Selected</p>
+            )
+        }else{
+            return(
+                <>
+                    <p>{userStruct["profileNFT"] }</p>
+                </>
+            )
         }
     }
 
@@ -68,7 +130,17 @@ const CurrentUser = () => {
                 <div className='home-container'>
                     <p>Username: {userStruct["username"]}</p>
                     <p>Current Status: {userStruct["statusMessage"]}</p>
-                    
+
+                    {displayCurrentNFT()}
+
+
+                    <input type="text" onChange={e=>setUsername(e.target.value)} placeholder='enter user name'  />
+                    <button onClick={updateUsername} className='buy-button' >Update Username</button>
+
+                    <input type="text" onChange={e=>setStatus(e.target.value)} placeholder='status message'  />
+                    <button onClick={updateStatus} className='buy-button' >Update Status</button>
+
+                    <MintProfileNFT />
                 </div>
             )
         }

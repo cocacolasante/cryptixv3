@@ -25,4 +25,5 @@ interface ICryptickets{
 
     function returnVenueAddress() external view returns(address);
     function returnCurrentCount() external view returns(uint);
+    function returnBandAddress() external view returns(address);
 }

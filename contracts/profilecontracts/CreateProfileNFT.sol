@@ -24,8 +24,6 @@ contract CreateProfileNFT is ERC721URIStorage {
         _mint(msg.sender, newTokenId);
         _setTokenURI(newTokenId, _tokenUri);
 
-        IProfile(profileContract).setProfileNFt(address(this), newTokenId);
-
         return newTokenId;
     }
 }

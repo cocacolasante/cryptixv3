@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import profileAbi from "../abiAssets/profileContractAbi.json"
 import PROFILECONTRACTADDRESS from '../addresses/ProfileContract';
 import MintProfileNFT from './MintProfileNFT';
+import ProfileNFTs from './ProfileNFTs';
 
 const nullAddress = "0x0000000000000000000000000000000000000000"
 
@@ -182,6 +183,8 @@ const CurrentUser = () => {
         <h2>Current User</h2>
         {/* create if statement for uesr address === null address to prompt a create user profile */}
         {!userStruct ? <p>Please connect wallet</p> : checkForUserProfile() }
+
+        <ProfileNFTs />
 
     </div>
   )

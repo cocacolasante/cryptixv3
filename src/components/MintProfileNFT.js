@@ -5,6 +5,9 @@ import env from "react-dotenv";
 import { Buffer } from "buffer";
 import createNftProfAbi from "../abiAssets/createProfNFT.json"
 import CREATEPROFNFTADDRESS from '../addresses/CreateProfileNFT';
+import PROFILECONTRACTADDRESS from '../addresses/ProfileContract';
+import profileAbi from "../abiAssets/profileContractAbi.json"
+
 
 
 
@@ -44,6 +47,18 @@ const MintProfileNFT = () => {
             console.log(`https://cryptix.infura-ipfs.io/ipfs/${result.path}`)
 
             
+            await mintProfileImage(`https://cryptix.infura-ipfs.io/ipfs/${result.path}`)
+            
+
+
+
+        }catch(error){
+            console.log(error)
+        }
+    }
+
+    const mintProfileImage = async (tokenUri) =>{
+        try{
             let txn, res
             const provider = new ethers.providers.Web3Provider(window.ethereum)
             const signer = provider.getSigner()
@@ -51,7 +66,7 @@ const MintProfileNFT = () => {
             const NFTProfileMint = new ethers.Contract(CREATEPROFNFTADDRESS, createNftProfAbi.abi, signer )
 
 
-            txn = await NFTProfileMint.makeNFT(`https://cryptix.infura-ipfs.io/ipfs/${result.path}`)
+            txn = await NFTProfileMint.makeNFT(tokenUri)
             res = await txn.wait()
             
 
@@ -62,14 +77,13 @@ const MintProfileNFT = () => {
             }else{
                 console.log("failed")
             }
-            
 
 
-
-        }catch(error){
-            console.log(error)
+        }catch(err){
+            console.log(err)
         }
     }
+
 
 
   return (

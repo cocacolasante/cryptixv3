@@ -1,4 +1,4 @@
-import React from 'react'
+import { Network, Alchemy } from "alchemy-sdk";
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import {ethers} from "ethers"
@@ -11,6 +11,14 @@ import profileContractAbi from "../abiAssets/profileContractAbi.json"
 import { FacebookShareButton, FacebookIcon } from 'react-share';
 import { TwitterShareButton, TwitterIcon } from 'react-share';
 import { LinkedinShareButton, LinkedinIcon } from 'react-share';
+import ViewMyTickets from "./ViewMyTickets";
+
+const settings = {
+    apiKey: env.ALCHEMY_MUMBAI_APIKEY, // Replace with your Alchemy API Key.
+    network: Network.MATIC_MUMBAI, // Replace with your network.
+  };
+
+const alchemy = new Alchemy(settings);
 
 const ShowManage = () => {
     const nullAddress = "0x0000000000000000000000000000000000000000"
@@ -258,6 +266,8 @@ const ShowManage = () => {
 
     const displayShow = () =>{
         return(
+            <>
+
             <div className='border-radius-outline view-lrg-show-card'>
                 <h2>Show Name: {showName} </h2>
                 <img src={imageUri} alt="nft" className='lrg-thumbnail' />
@@ -297,6 +307,8 @@ const ShowManage = () => {
                     </LinkedinShareButton>
                 </div>
         </div>
+                <ViewMyTickets />
+        </>
 
         )
     }
@@ -304,8 +316,6 @@ const ShowManage = () => {
     
     useEffect(()=>{
         checkIfWalletIsConnected()
-
-
     },[])
   
   return (

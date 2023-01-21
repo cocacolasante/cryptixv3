@@ -403,4 +403,13 @@ input{
 
 }
 
+.view-my-tix-div{
+  display: flex;
+  justify-content:center;
+}
+
+.view-ticket-card{
+  padding-right: 10px;
+}
+
         

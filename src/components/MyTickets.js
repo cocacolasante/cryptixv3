@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { create as ipfsClient} from "ipfs-http-client"
+import { Link } from 'react-router-dom';
 import {ethers} from "ethers"
 import env from "react-dotenv";
 import { Buffer } from "buffer";
@@ -228,6 +229,7 @@ const MyTickets = () => {
               {displayShowDate(i['showTime'])}
 
               <button className='buy-button' value={i} onClick={e=>buyTickets(e.target.value, i["ticketAddress"], i["ShowName"], i["bandAddress"], i["venueAddress"])} >Buy Ticket</button>
+              <Link className='event-btm' to={`/browse/${i["ticketAddress"]}`} >View Details</Link>
           </div>
         )
       })}

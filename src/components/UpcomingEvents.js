@@ -196,6 +196,8 @@ const UpcomingEvents = () => {
 
   }
 
+  
+
 
 
 const displayEventCard = () =>{

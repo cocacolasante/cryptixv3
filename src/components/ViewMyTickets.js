@@ -4,14 +4,20 @@ import { Network, Alchemy } from "alchemy-sdk";
 import env from "react-dotenv";
 import {ethers} from "ethers"
 import ticketAbi from "../abiAssets/ticketAbi.json"
+import CREATE_SHOW_ADDRESS from '../addresses/createShow';
+import createContractAbi from "../abiAssets/createContractAbi.json"
+import checkInAbi from "../abiAssets/checkinAbi.json"
+import managecheckInAddress from '../addresses/managecheckin';
+import managecheckinAbi from "../abiAssets/ManagecheckInAbi.json"
+import DisplayTicketCard from './DisplayTicketCard';
 
 
 
 
 
 const settings = {
-    apiKey: env.ALCHEMY_MUMBAI_APIKEY, // Replace with your Alchemy API Key.
-    network: Network.MATIC_MUMBAI, // Replace with your network.
+    apiKey: env.ALCHEMY_MUMBAI_APIKEY, 
+    network: Network.MATIC_MUMBAI,
   };
 
 const alchemy = new Alchemy(settings);
@@ -23,25 +29,68 @@ const ViewMyTickets = () => {
     const[activeAccount, setActiveAccount] = useState()
     const [imageUri, setImageUri ] = useState()
 
+    const [checkInAddress, setCheckInAddress ] = useState()
+
 
     // USE CREATOR CONTRACT TO SEARCH BY TICKETS ADDRESS PARAMS.ADDRESS TO REVERSE SEARCH UP THE CHECK TIX CONTRACT
 
-    
+
 
 
     const displayTickets = () =>{
         return (tickets["ownedNfts"].map((i)=>{
-            console.log(i)
             return(
-                <div className='view-ticket-card'>
+                <div key={i["tokenId"]} className='view-ticket-card'>
                     <h4>Ticket Number: {i["tokenId"]} </h4>
                     <img src={imageUri} alt="nft ticket art" className='thumbnail' />
-                    <p>Redeemed: {}</p>
-                    <button className='buy-button' onClick={null} >Redeem</button>
-                    <button className='buy-button' onClick={null} >List for sale (coming soon)</button>
+                    <p>Redeemed: {!checkInAddress ? <>Loading...</> : <>STILL Loading</>}</p>
+                    <button className='buy-button' onClick={null} >Check Redeemed</button>
                 </div>
             )
         }))
+    }
+
+    const displayCard = () =>{
+        return (tickets["ownedNfts"].map((i)=>{
+            return(
+                <DisplayTicketCard tokenId={i["tokenId"]} checkInAddress={checkInAddress} imgurl={imageUri} ticketId={i["tokenId"]} />
+            )
+        }))
+    }
+
+
+
+    const checkIfTixRedeemed = async (ticketNumber) =>{
+        try{
+            const provider = new ethers.providers.Web3Provider(window.ethereum)
+            const CheckInContract = new ethers.Contract(checkInAddress, checkInAbi.abi, provider )
+
+            const checkRedeemed = await CheckInContract.viewCheckedIn(ticketNumber)
+
+
+            
+
+            
+        }catch(err){
+            console.log(err)
+        }
+    }
+
+    const getCheckInContract = async () =>{
+        try{
+            const provider = new ethers.providers.Web3Provider(window.ethereum)
+
+            const ManageCheckInContract = new ethers.Contract(managecheckInAddress, managecheckinAbi.abi, provider)
+
+            const checkinStruct = await ManageCheckInContract.tixToCheckIn(params.address)
+
+            console.log(checkinStruct)
+
+            setCheckInAddress(checkinStruct["checkInContract"]) 
+
+        }catch(err){
+            console.log(err)
+        }
     }
 
     const getTicketNfts = async () =>{
@@ -99,20 +148,23 @@ const ViewMyTickets = () => {
 
     useEffect(()=>{
         checkIfWalletIsConnected()
+        getCheckInContract()
     },[])
 
     useEffect(()=>{
         getTicketNfts()
         _getTicketNFTImage()
+       
     },[activeAccount])
 
   return (
     <div className='home-container'>
-        <h2>View My Tickets</h2>
+        <h2>Purchased Tickets</h2>
 
     <div className='view-my-tix-div'>
-        {!tickets ? <p> loading</p> : displayTickets()}
+        {!tickets ? <p> loading</p> : displayCard()}
     </div>
+   
     </div>
   )
 }

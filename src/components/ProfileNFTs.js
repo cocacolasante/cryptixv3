@@ -20,11 +20,14 @@ const ProfileNFTs = () => {
 
 
     const displayProfileNfts = () =>{
-        allProfileNFTs.map((i) =>{
-            return(
-                <ProfileNFTCard id={i["tokenId"]} />
-                )
-        })
+
+        return(
+            allProfileNFTs["ownedNfts"].map((i) =>{
+                return(
+                    <ProfileNFTCard id={i["tokenId"]} />
+                    )
+            })
+        )
     }
 
     const getProfileNfts = async () =>{

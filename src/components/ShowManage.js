@@ -282,7 +282,6 @@ const ShowManage = () => {
                 <button onClick={buyTickets} className='buy-button'>Purchase ticket</button>
                 <br />
 
-                <button className='buy-button' >Share Event</button>
                 <div>
                     <FacebookShareButton
                         url={`https://plain-butterfly-8263.on.fleek.co/#/browse/${params.address}`}

@@ -4,15 +4,9 @@ import { Network, Alchemy } from "alchemy-sdk";
 import env from "react-dotenv";
 import {ethers} from "ethers"
 import ticketAbi from "../abiAssets/ticketAbi.json"
-import CREATE_SHOW_ADDRESS from '../addresses/createShow';
-import createContractAbi from "../abiAssets/createContractAbi.json"
-import checkInAbi from "../abiAssets/checkinAbi.json"
 import managecheckInAddress from '../addresses/managecheckin';
 import managecheckinAbi from "../abiAssets/ManagecheckInAbi.json"
 import DisplayTicketCard from './DisplayTicketCard';
-
-
-
 
 
 const settings = {
@@ -26,54 +20,18 @@ const ViewMyTickets = () => {
     const params = useParams();
 
     const [tickets, setTickets] = useState()
-    const[activeAccount, setActiveAccount] = useState()
+    const [activeAccount, setActiveAccount] = useState()
     const [imageUri, setImageUri ] = useState()
 
     const [checkInAddress, setCheckInAddress ] = useState()
 
 
-    // USE CREATOR CONTRACT TO SEARCH BY TICKETS ADDRESS PARAMS.ADDRESS TO REVERSE SEARCH UP THE CHECK TIX CONTRACT
-
-
-
-
-    const displayTickets = () =>{
-        return (tickets["ownedNfts"].map((i)=>{
-            return(
-                <div key={i["tokenId"]} className='view-ticket-card'>
-                    <h4>Ticket Number: {i["tokenId"]} </h4>
-                    <img src={imageUri} alt="nft ticket art" className='thumbnail' />
-                    <p>Redeemed: {!checkInAddress ? <>Loading...</> : <>STILL Loading</>}</p>
-                    <button className='buy-button' onClick={null} >Check Redeemed</button>
-                </div>
-            )
-        }))
-    }
-
     const displayCard = () =>{
         return (tickets["ownedNfts"].map((i)=>{
             return(
-                <DisplayTicketCard tokenId={i["tokenId"]} checkInAddress={checkInAddress} imgurl={imageUri} ticketId={i["tokenId"]} />
+                <DisplayTicketCard key={i["tokenId"]} tokenId={i["tokenId"]} checkInAddress={checkInAddress} imgurl={imageUri} ticketId={i["tokenId"]} />
             )
         }))
-    }
-
-
-
-    const checkIfTixRedeemed = async (ticketNumber) =>{
-        try{
-            const provider = new ethers.providers.Web3Provider(window.ethereum)
-            const CheckInContract = new ethers.Contract(checkInAddress, checkInAbi.abi, provider )
-
-            const checkRedeemed = await CheckInContract.viewCheckedIn(ticketNumber)
-
-
-            
-
-            
-        }catch(err){
-            console.log(err)
-        }
     }
 
     const getCheckInContract = async () =>{
